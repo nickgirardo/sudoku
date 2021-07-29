@@ -1,0 +1,13 @@
+# vim swap files
+*.swp
+*.swo
+
+# mac os bs
+*.DS_Store
+
+#
+node_modules
+build
+
+# output from publishing
+bundle.*
