@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './src/app.ts',
+  entry: './src/app.tsx',
   mode: 'production',
   devtool: 'inline-source-map',
   output: {
@@ -10,7 +10,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   resolve: {
-    extensions: ['', '.js', '.ts'],
+    extensions: ['', '.js', '.ts', '.jsx', '.tsx'],
   },
   module: {
     rules: [
