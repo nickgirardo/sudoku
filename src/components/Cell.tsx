@@ -1,3 +1,5 @@
+import classnames from 'classnames';
+
 import { CellValue } from '../@types/sudoku';
 
 interface Props {
@@ -9,14 +11,14 @@ interface Props {
 
 export const Cell = (props: Props) => (
   <div
-    className='cell'
+    className={ classnames('cell', props.value.kind === 'empty' && 'cell-empty') }
     onMouseDown={ props.handleMouseDown }
     onMouseOver={ props.handleMouseOver }
   >
     <div
-      className={ ['cell-inner', props.isSelected ? 'cell-inner-selected' : ''].join(' ') }
+      className={ classnames('cell-inner', props.isSelected && 'cell-inner-selected') }
     >
-      { props.value.kind === 'empty' ? '-' : props.value.value }
+      { props.value.kind === 'set' && props.value.value }
     </div>
   </div>
 );

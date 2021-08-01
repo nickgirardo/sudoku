@@ -21,7 +21,7 @@ type SetCellPayload = SetValue & { ix: CellIndex };
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: new Array(BOARD_SIZE).fill(0).map((_, ix) => valueCell(ix%9 + 1)) as Array<Cell>,
+  initialState: new Array(BOARD_SIZE).fill(0).map(() => emptyCell()) as Array<Cell>,
   reducers: {
     // TODO I shouldn't need to be handling the state like this
     // will try to find out why ts is complaining
