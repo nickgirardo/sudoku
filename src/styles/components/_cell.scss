@@ -1,0 +1,14 @@
+.cell {
+  user-select: none;
+  background-color: transparent;
+
+  .cell-inner {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+
+    &.cell-inner-selected {
+      background-color: lightblue;
+    }
+  }
+}

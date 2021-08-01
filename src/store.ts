@@ -1,8 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
+import { boardReducer } from './store/boardSlice';
+
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    board: boardReducer,
+  },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

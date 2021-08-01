@@ -1,0 +1,51 @@
+.board-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  .board {
+    $cell-size: 54px;
+    $thick-pad: 3px;
+    $thin-pad: 1px;
+
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    grid-gap: 0px;
+
+    // TODO autoprefixer
+    width: fit-content;
+    width: -moz-fit-content;
+
+    margin: auto;
+
+    background-color: black;
+
+    .cell {
+      width: $cell-size;
+      height: $cell-size;
+
+      padding-left: $thin-pad;
+      padding-bottom: $thin-pad;
+    }
+
+    .cell:nth-child(9n) {
+      padding-right: $thick-pad;
+    }
+
+    .cell:nth-child(3n+1) {
+      padding-left: $thick-pad;
+    }
+
+    .cell:nth-last-child(n+73) {
+      padding-top: $thick-pad;
+    }
+
+    .cell:nth-child(n+73),
+    .cell:nth-child(n+46):nth-child(-n+54),
+    .cell:nth-child(n+19):nth-child(-n+27) {
+      padding-bottom: $thick-pad;
+    }
+  }
+}

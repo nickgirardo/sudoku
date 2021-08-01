@@ -6,6 +6,8 @@ import store from './store';
 
 import { App } from './components/App';
 
+import './styles/style.scss';
+
 const wrapper = document.getElementById('react-container')!;
 render(
   <Provider store={store}>
