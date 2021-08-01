@@ -1,7 +1,7 @@
 import { useState, MouseEvent, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store';
-import { clearCell, setCell } from '../store/boardSlice';
+import { clearCells, setCells } from '../store/boardSlice';
 
 import { setValue } from '../util';
 import { Cell } from './Cell';
@@ -44,18 +44,11 @@ export const Board = () => {
     // Key is between 1...9
     if (ev.keyCode > 48 && ev.keyCode < 58) {
       const digitValue = Number(ev.key);
-      // TODO batch?
-      for (const selected of selectedCells) {
-        dispatch(setCell({ ix: selected, ...setValue(digitValue) }));
-      }
+      dispatch(setCells({ ixs: selectedCells, ...setValue(digitValue) }));
     }
 
-    if (ev.key === 'Backspace' || ev.key === 'Delete') {
-      // TODO batch?
-      for (const selected of selectedCells) {
-        dispatch(clearCell(selected));
-      }
-    }
+    if (ev.key === 'Backspace' || ev.key === 'Delete')
+      dispatch(clearCells(selectedCells));
 
     if (ev.keyCode === 85) {
       // TODO undo behavior
