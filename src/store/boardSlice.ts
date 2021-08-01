@@ -5,8 +5,9 @@ import {
 
 import {
   emptyCell,
-  valueCell,
-  getIndex,
+  givenCell,
+  emptyValue,
+  setValue,
 } from '../util';
 
 import {
@@ -21,25 +22,28 @@ import { BOARD_SIZE } from '../constants';
 type SetCellPayload = SetValue & { ix: CellIndex };
 type SetCellsPayload = SetValue & { ixs: Array<CellIndex> };
 
+const maybeGiven = (_, ix: number) =>
+  Math.random() > 0.2 ?
+    emptyCell() :
+    givenCell((ix % 9) + 1);
+
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: new Array(BOARD_SIZE).fill(0).map(() => emptyCell()) as Array<Cell>,
+  initialState: new Array(BOARD_SIZE).fill(0).map(maybeGiven) as Array<Cell>,
   reducers: {
-    // TODO I shouldn't need to be handling the state like this
-    // will try to find out why ts is complaining
     clearCell: (state, action: PayloadAction<CellIndex>) => {
-      state[action.payload] = emptyCell();
+      state[action.payload].value = emptyValue();
     },
     clearCells: (state, action: PayloadAction<Array<CellIndex>>) => {
       for (const cell of action.payload)
-        state[cell] = emptyCell();
+        state[cell].value = emptyValue();
     },
     setCell: (state, action: PayloadAction<SetCellPayload>) => {
-      state[action.payload.ix] = valueCell(action.payload.value);
+      state[action.payload.ix].value = setValue(action.payload.value);
     },
     setCells: (state, action: PayloadAction<SetCellsPayload>) => {
       for (const cell of action.payload.ixs)
-        state[cell] = valueCell(action.payload.value);
+        state[cell].value = setValue(action.payload.value);
     },
   },
 });

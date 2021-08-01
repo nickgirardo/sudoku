@@ -3,23 +3,37 @@ import classnames from 'classnames';
 import { CellValue } from '../@types/sudoku';
 
 interface Props {
+  given: CellValue,
   value: CellValue,
   isSelected: boolean,
   handleMouseDown: () => void,
   handleMouseOver: () => void,
 }
 
-export const Cell = (props: Props) => (
-  <div
-    className={ classnames('cell', props.value.kind === 'empty' && 'cell-empty') }
-    onMouseDown={ props.handleMouseDown }
-    onMouseOver={ props.handleMouseOver }
-  >
+export const Cell = (props: Props) => {
+  const innerClasses = classnames(
+    'cell-inner',
+    props.isSelected && 'cell-inner-selected',
+    props.given.kind === 'set' && 'cell-inner-given',
+  );
+
+
+  return (
     <div
-      className={ classnames('cell-inner', props.isSelected && 'cell-inner-selected') }
+      className='cell'
+      onMouseDown={ props.handleMouseDown }
+      onMouseOver={ props.handleMouseOver }
     >
-      { props.value.kind === 'set' && props.value.value }
+      <div
+        className={ innerClasses }
+      >
+        {
+          props.given.kind === 'set' ?
+            props.given.value :
+            props.value.kind === 'set' && props.value.value
+        }
+      </div>
     </div>
-  </div>
-);
+  );
+};
 

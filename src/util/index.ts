@@ -14,6 +14,7 @@ export const emptyValue = (): EmptyValue => ({
 
 export const emptyCell = (): Cell => ({
   value: emptyValue(),
+  given: emptyValue(),
 });
 
 export const setValue = (value: number): SetValue => ({
@@ -23,8 +24,11 @@ export const setValue = (value: number): SetValue => ({
 
 export const valueCell = (value: number): Cell => ({
   value: setValue(value),
+  given: emptyValue(),
 });
 
-export const getIndex = (x: number, y: number): number =>
-  (y * BOARD_WIDTH) + x;
+export const givenCell = (value: number): Cell => ({
+  value: emptyValue(),
+  given: setValue(value),
+});
 

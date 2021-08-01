@@ -61,6 +61,7 @@ export const Board = () => {
     <Cell
       key={ ix }
       value={ c.value }
+      given={ c.given }
       isSelected={ selectedCells.includes(ix) }
       handleMouseDown={ () => cellDown(ix) }
       handleMouseOver={ () => cellOver(ix) }

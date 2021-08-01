@@ -10,4 +10,4 @@ export type EmptyValue = {
 
 export type CellValue = SetValue | EmptyValue;
 
-export type Cell = { value: CellValue };
+export type Cell = { given: CellValue, value: CellValue };
