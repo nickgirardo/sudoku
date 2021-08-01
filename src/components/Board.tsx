@@ -1,9 +1,12 @@
 import { useState, MouseEvent, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
+
+import { setValue } from '../util';
+import { uniq } from 'lodash';
+
 import { RootState, useAppDispatch } from '../store';
 import { clearCells, setCells } from '../store/boardSlice';
 
-import { setValue } from '../util';
 import { Cell } from './Cell';
 
 export const Board = () => {
@@ -22,8 +25,7 @@ export const Board = () => {
     if (!selectActive)
       return;
 
-    // TODO unique
-    setSelectedCells([...selectedCells, ix]);
+    setSelectedCells(uniq([...selectedCells, ix]));
   };
 
   const containerDown = (ev: MouseEvent) => {
