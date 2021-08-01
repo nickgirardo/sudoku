@@ -40,15 +40,25 @@ export const Board = () => {
     setSelectedCells([]);
   };
 
-  const keyPress = (ev: KeyboardEvent) => {
-    console.log(ev);
-    const key = ev.charCode;
+  const keyDown = (ev: KeyboardEvent) => {
     // Key is between 1...9
-    if (['1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(ev.key)) {
+    if (ev.keyCode > 48 && ev.keyCode < 58) {
       const digitValue = Number(ev.key);
+      // TODO batch?
       for (const selected of selectedCells) {
         dispatch(setCell({ ix: selected, ...setValue(digitValue) }));
       }
+    }
+
+    if (ev.key === 'Backspace' || ev.key === 'Delete') {
+      // TODO batch?
+      for (const selected of selectedCells) {
+        dispatch(clearCell(selected));
+      }
+    }
+
+    if (ev.keyCode === 85) {
+      // TODO undo behavior
     }
   };
 
@@ -67,7 +77,7 @@ export const Board = () => {
       className='board-container'
       onMouseUp={ () => setSelectActive(false) }
       onMouseDown={ ev => containerDown(ev) }
-      onKeyPress={ ev => keyPress(ev) }
+      onKeyDown={ ev => keyDown(ev) }
       tabIndex={ 0 }
     >
       <div className='board'>
