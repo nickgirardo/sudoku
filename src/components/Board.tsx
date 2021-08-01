@@ -6,6 +6,7 @@ import { uniq } from 'lodash';
 
 import { RootState, useAppDispatch } from '../store';
 import { clearCells, setCells } from '../store/boardSlice';
+import { nextMode } from '../store/modeSlice';
 
 import { Cell } from './Cell';
 
@@ -44,14 +45,21 @@ export const Board = () => {
 
   const keyDown = (ev: KeyboardEvent) => {
     // Key is between 1...9
+    // Enter the given value into the selected cells
     if (ev.keyCode > 48 && ev.keyCode < 58) {
       const digitValue = Number(ev.key);
       dispatch(setCells({ ixs: selectedCells, ...setValue(digitValue) }));
     }
 
+    // Clear current values from the selected cells
     if (ev.key === 'Backspace' || ev.key === 'Delete')
       dispatch(clearCells(selectedCells));
 
+    // Advance the entry mode
+    if (ev.key === ' ')
+      dispatch(nextMode());
+
+    // Undo
     if (ev.keyCode === 85) {
       // TODO undo behavior
     }

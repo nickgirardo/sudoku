@@ -22,14 +22,14 @@ import { BOARD_SIZE } from '../constants';
 type SetCellPayload = SetValue & { ix: CellIndex };
 type SetCellsPayload = SetValue & { ixs: Array<CellIndex> };
 
-const maybeGiven = (_, ix: number) =>
+const maybeGiven = (ix: number) =>
   Math.random() > 0.2 ?
     emptyCell() :
     givenCell((ix % 9) + 1);
 
 export const boardSlice = createSlice({
   name: 'board',
-  initialState: new Array(BOARD_SIZE).fill(0).map(maybeGiven) as Array<Cell>,
+  initialState: new Array(BOARD_SIZE).fill(0).map((_, ix) => maybeGiven(ix)) as Array<Cell>,
   reducers: {
     clearCell: (state, action: PayloadAction<CellIndex>) => {
       state[action.payload].value = emptyValue();

@@ -2,10 +2,12 @@ import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
 
 import { boardReducer } from './store/boardSlice';
+import { modeReducer } from './store/modeSlice';
 
 const store = configureStore({
   reducer: {
     board: boardReducer,
+    mode: modeReducer,
   },
 });
 
