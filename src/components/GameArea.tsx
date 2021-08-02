@@ -48,7 +48,7 @@ export const GameArea = () => {
   const keyDown = (ev: KeyboardEvent) => {
     // Key is between 1...9
     // Enter the given value into the selected cells
-    if (ev.keyCode > 48 && ev.keyCode < 58) {
+    if (['1', '2', '3', '4', '5', '6', '7', '8', '9'].includes(ev.key)) {
       const digitValue = Number(ev.key);
       dispatch(setCells({ ixs: selectedCells, value: digitValue, mode: entryMode }));
     }
