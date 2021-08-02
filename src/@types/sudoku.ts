@@ -10,7 +10,12 @@ export type EmptyValue = {
 
 export type CellValue = SetValue | EmptyValue;
 
-export type Cell = { given: CellValue, value: CellValue };
+export type Cell = {
+  given: CellValue,
+  value: CellValue,
+  cornerMarks: Array<number>,
+  centerMarks: Array<number>,
+};
 
 export enum EntryMode {
   Value,

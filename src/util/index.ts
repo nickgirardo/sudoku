@@ -21,6 +21,8 @@ export const emptyValue = (): EmptyValue => ({
 export const emptyCell = (): Cell => ({
   value: emptyValue(),
   given: emptyValue(),
+  cornerMarks: [],
+  centerMarks: [],
 });
 
 export const setValue = (value: number): SetValue => ({
@@ -31,10 +33,14 @@ export const setValue = (value: number): SetValue => ({
 export const valueCell = (value: number): Cell => ({
   value: setValue(value),
   given: emptyValue(),
+  cornerMarks: [],
+  centerMarks: [],
 });
 
 export const givenCell = (value: number): Cell => ({
   value: emptyValue(),
   given: setValue(value),
+  cornerMarks: [],
+  centerMarks: [],
 });
 
