@@ -60,8 +60,13 @@ export const Board = () => {
       dispatch(nextMode());
 
     // Undo
-    if (ev.keyCode === 85) {
+    if (ev.key === 'u') {
       // TODO undo behavior
+    }
+
+    // Redo
+    if (ev.key === 'r') {
+      // TODO redo behavior
     }
   };
 
