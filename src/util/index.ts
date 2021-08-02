@@ -82,6 +82,7 @@ const setCellCorner = (cell: Cell, mark: number): Cell => {
     case CellType.Given:
       return cell;
     // Change the corner mark for the cell
+    // TODO this change isn't immediately visible, should it be ignored?
     case CellType.Value: {
       const corners = cell.cornerMarks.includes(mark) ?
         cell.cornerMarks.filter(m => m !== mark) :
@@ -105,7 +106,8 @@ const setCellCenter = (cell: Cell, mark: number): Cell => {
     // NOP -- Marks don't matter for given cells
     case CellType.Given:
       return cell;
-    // Change the value of the cell
+    // Change the center marks for the cell
+    // TODO this change isn't immediately visible, should it be ignored?
     case CellType.Value: {
       const centers = cell.centerMarks.includes(mark) ?
         cell.centerMarks.filter(m => m !== mark) :

@@ -6,7 +6,7 @@ interface Props {
 
 export const Marks = ({ corners, centers }: Props) => <>
   <div className='corners'>{
-    corners.map(c => <div>{ c }</div>)
+    corners.map(c => <div key={ c }>{ c }</div>)
   }</div>
   <div className='centers'>{ centers.join(' ') }</div>
 </>;
