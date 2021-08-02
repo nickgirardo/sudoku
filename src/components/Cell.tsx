@@ -3,6 +3,8 @@ import classnames from 'classnames';
 import { Cell as _Cell, CellType } from '../@types/sudoku';
 import { assertNever } from '../util';
 
+import { Marks } from './Marks';
+
 interface Props {
   cell: _Cell,
   isSelected: boolean,
@@ -21,7 +23,7 @@ export const Inner = ({ cell }: InnerProps) => {
     case CellType.Value:
       return <>{ cell.value }</>;
     case CellType.Mark:
-      return <>{ /* TODO render marks here */ }</>;
+      return <Marks corners={ cell.cornerMarks } centers={ cell.centerMarks } />
     default:
       return assertNever(cell);
   }

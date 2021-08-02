@@ -9,19 +9,20 @@ import {
   ValueCell,
   MarkCell,
   CellIndex,
+  EntryMode,
 } from '../@types/sudoku';
 
 import {
   clearCell as _clearCell,
-  setCellValue,
+  setCell as _setCell,
   newMarkCell,
   newGivenCell,
 } from '../util';
 
 import { BOARD_SIZE } from '../constants';
 
-type SetCellPayload = { ix: CellIndex, value: number };
-type SetCellsPayload = { ixs: Array<CellIndex>, value: number };
+type SetCellPayload = { mode: EntryMode, ix: CellIndex, value: number };
+type SetCellsPayload = { mode: EntryMode, ixs: Array<CellIndex>, value: number };
 
 const maybeGiven = (ix: number) =>
   Math.random() > 0.2 ?
@@ -41,11 +42,11 @@ export const boardSlice = createSlice({
     },
     setCell: (state, action: PayloadAction<SetCellPayload>) => {
       const cell = action.payload.ix;
-      state[cell] = setCellValue(state[cell], action.payload.value);
+      state[cell] = _setCell(action.payload.mode, state[cell], action.payload.value);
     },
     setCells: (state, action: PayloadAction<SetCellsPayload>) => {
       for (const cell of action.payload.ixs)
-        state[cell] = setCellValue(state[cell], action.payload.value);
+        state[cell] = _setCell(action.payload.mode, state[cell], action.payload.value);
     },
   },
 });

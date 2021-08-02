@@ -12,6 +12,7 @@ import { Cell } from './Cell';
 export const Board = () => {
   const dispatch = useAppDispatch();
   const board = useSelector((state: RootState) => state.board);
+  const entryMode = useSelector((state: RootState) => state.mode);
 
   const [selectActive, setSelectActive] = useState(false);
   const [selectedCells, setSelectedCells] = useState([] as Array<number>);
@@ -47,7 +48,7 @@ export const Board = () => {
     // Enter the given value into the selected cells
     if (ev.keyCode > 48 && ev.keyCode < 58) {
       const digitValue = Number(ev.key);
-      dispatch(setCells({ ixs: selectedCells, value: digitValue }));
+      dispatch(setCells({ ixs: selectedCells, value: digitValue, mode: entryMode }));
     }
 
     // Clear current values from the selected cells

@@ -9,7 +9,9 @@
     color: #06789d;
 
     font-size: 40px;
+    text-align: center;
 
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -20,6 +22,68 @@
 
     &.cell-inner-selected {
       background-color: #c7dee6;
+    }
+
+    .corners {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+
+      font-size: 11px;
+      // TODO this is super janky lol
+      :nth-child(1) {
+        position: absolute;
+        top: 0;
+        left: 2px;
+      }
+      :nth-child(2) {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+      }
+      :nth-child(3) {
+        position: absolute;
+        top: 0;
+        right: 2px;
+      }
+      :nth-child(4) {
+        position: absolute;
+        bottom: 0;
+        left: 2px;
+      }
+      :nth-child(5) {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+      }
+      :nth-child(6) {
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+      }
+      :nth-child(7) {
+        position: absolute;
+        top: 20px;
+        left: 2px;
+      }
+      :nth-child(8) {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+      }
+      :nth-child(9) {
+        position: absolute;
+        top: 20px;
+        right: 2px;
+      }
+    }
+    .centers {
+      font-size: 11px;
     }
   }
 }
