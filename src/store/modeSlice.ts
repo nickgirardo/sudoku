@@ -22,9 +22,8 @@ export const modeSlice = createSlice({
           assertNever(state);
       }
     },
-    setMode: (state, action: PayloadAction<EntryMode>) => {
-      state = action.payload;
-    },
+    setMode: (state, action: PayloadAction<EntryMode>) =>
+      action.payload,
   },
 });
 

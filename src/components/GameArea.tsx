@@ -7,6 +7,7 @@ import { RootState, useAppDispatch } from '../store';
 import { clearCells, setCells } from '../store/boardSlice';
 import { nextMode } from '../store/modeSlice';
 
+import { Controls } from './Controls';
 import { Board } from './Board';
 import { Cell } from './Cell';
 
@@ -92,7 +93,7 @@ export const GameArea = () => {
       <Board>
         { cells }
       </Board>
-      <div className='temp' />
+      <Controls />
     </div>
   );
 }
