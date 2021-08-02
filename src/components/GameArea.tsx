@@ -92,6 +92,7 @@ export const GameArea = () => {
       <Board>
         { cells }
       </Board>
+      <div className='temp' />
     </div>
   );
 }
