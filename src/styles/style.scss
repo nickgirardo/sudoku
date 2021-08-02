@@ -2,5 +2,6 @@
   box-sizing: border-box;
 }
 
+@import 'components/game-area.scss';
 @import 'components/board.scss';
 @import 'components/cell.scss';

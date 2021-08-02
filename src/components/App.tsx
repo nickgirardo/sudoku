@@ -1,3 +1,3 @@
-import { Board } from './Board';
+import { GameArea } from './GameArea';
 
-export const App = () => <Board />;
+export const App = () => <GameArea />;
