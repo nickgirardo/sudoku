@@ -1,7 +1,6 @@
 import { useState, MouseEvent, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
 
-import { setValue } from '../util';
 import { uniq } from 'lodash';
 
 import { RootState, useAppDispatch } from '../store';
@@ -48,7 +47,7 @@ export const Board = () => {
     // Enter the given value into the selected cells
     if (ev.keyCode > 48 && ev.keyCode < 58) {
       const digitValue = Number(ev.key);
-      dispatch(setCells({ ixs: selectedCells, ...setValue(digitValue) }));
+      dispatch(setCells({ ixs: selectedCells, value: digitValue }));
     }
 
     // Clear current values from the selected cells
@@ -73,8 +72,7 @@ export const Board = () => {
   const cells = board.map((c, ix) =>
     <Cell
       key={ ix }
-      value={ c.value }
-      given={ c.given }
+      cell={ c }
       isSelected={ selectedCells.includes(ix) }
       handleMouseDown={ () => cellDown(ix) }
       handleMouseOver={ () => cellOver(ix) }

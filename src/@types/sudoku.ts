@@ -1,21 +1,30 @@
 export type CellIndex = number;
 
-export type SetValue = {
-  kind: 'set';
+export enum CellType {
+  Given,
+  Value,
+  Mark,
+}
+
+export type GivenCell = {
+  kind: CellType.Given;
   value: number;
-}
-export type EmptyValue = {
-  kind: 'empty';
-}
-
-export type CellValue = SetValue | EmptyValue;
-
-export type Cell = {
-  given: CellValue,
-  value: CellValue,
-  cornerMarks: Array<number>,
-  centerMarks: Array<number>,
 };
+
+export type ValueCell = {
+  kind: CellType.Value;
+  value: number;
+  cornerMarks: Array<number>;
+  centerMarks: Array<number>;
+};
+
+export type MarkCell = {
+  kind: CellType.Mark;
+  cornerMarks: Array<number>;
+  centerMarks: Array<number>;
+};
+
+export type Cell = GivenCell | ValueCell | MarkCell;
 
 export enum EntryMode {
   Value,

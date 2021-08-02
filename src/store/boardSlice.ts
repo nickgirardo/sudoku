@@ -4,46 +4,48 @@ import {
 } from '@reduxjs/toolkit';
 
 import {
-  emptyCell,
-  givenCell,
-  emptyValue,
-  setValue,
-} from '../util';
+  Cell,
+  GivenCell,
+  ValueCell,
+  MarkCell,
+  CellIndex,
+} from '../@types/sudoku';
 
 import {
-  Cell,
-  CellIndex,
-  SetValue,
-} from '../@types/sudoku';
+  clearCell as _clearCell,
+  setCellValue,
+  newMarkCell,
+  newGivenCell,
+} from '../util';
 
 import { BOARD_SIZE } from '../constants';
 
-// TODO these types aren't super ergonomic
-type SetCellPayload = SetValue & { ix: CellIndex };
-type SetCellsPayload = SetValue & { ixs: Array<CellIndex> };
+type SetCellPayload = { ix: CellIndex, value: number };
+type SetCellsPayload = { ixs: Array<CellIndex>, value: number };
 
 const maybeGiven = (ix: number) =>
   Math.random() > 0.2 ?
-    emptyCell() :
-    givenCell((ix % 9) + 1);
+    newMarkCell() :
+    newGivenCell((ix % 9) + 1);
 
 export const boardSlice = createSlice({
   name: 'board',
   initialState: new Array(BOARD_SIZE).fill(0).map((_, ix) => maybeGiven(ix)) as Array<Cell>,
   reducers: {
     clearCell: (state, action: PayloadAction<CellIndex>) => {
-      state[action.payload].value = emptyValue();
+      state[action.payload] = _clearCell(state[action.payload]);
     },
     clearCells: (state, action: PayloadAction<Array<CellIndex>>) => {
       for (const cell of action.payload)
-        state[cell].value = emptyValue();
+        state[cell] = _clearCell(state[cell]);
     },
     setCell: (state, action: PayloadAction<SetCellPayload>) => {
-      state[action.payload.ix].value = setValue(action.payload.value);
+      const cell = action.payload.ix;
+      state[cell] = setCellValue(state[cell], action.payload.value);
     },
     setCells: (state, action: PayloadAction<SetCellsPayload>) => {
       for (const cell of action.payload.ixs)
-        state[cell].value = setValue(action.payload.value);
+        state[cell] = setCellValue(state[cell], action.payload.value);
     },
   },
 });
