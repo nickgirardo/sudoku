@@ -2,7 +2,7 @@
   $hover-color: $color-light-blue;
 
   padding: 0.5em;
-  border: $border-med solid $color-black;
+  border: $border-med;
   border-radius: $border-radius;
 
   background-color: $color-white;
@@ -31,5 +31,11 @@
   &.button-active {
     background-color: $color-black;
     color: $color-white;
+  }
+
+  &.button-compact {
+    // TODO autoprefixer?
+    width: -moz-fit-content;
+    width: fit-content;
   }
 }

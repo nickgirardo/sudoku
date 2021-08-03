@@ -1,0 +1,19 @@
+.modal {
+  position: absolute;
+  // Not super happy with these
+  top: 30%;
+  left: 40px;
+  right: 40px;
+
+  border: $border-med;
+  border-radius: $border-radius;
+
+  background-color: $color-white;
+
+  padding: 20px;
+  overflow: auto;
+
+  .modal-title {
+    margin-top: 0;
+  }
+}

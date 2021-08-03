@@ -1,14 +1,17 @@
+import { MouseEvent } from 'react';
 import classnames from 'classnames';
 
 interface Props {
-  label: string,
   active?: boolean,
-  onClick: () => void,
+  compact?: boolean,
+  label: string,
+  onClick: (arg0: MouseEvent) => void,
 }
 
-export const Button = ({ active, label, onClick }: Props) => {
+export const Button = ({ active, compact, label, onClick }: Props) => {
   const classes = classnames(
     'button',
+    compact && 'button-compact',
     active && 'button-active',
     `button-${label.toLowerCase()}`,
   );

@@ -8,7 +8,15 @@ $color-mid-blue: hsla(195, 93%, 32%, 1);
 
 
 // BORDERS
-$border-thick: 3px;
-$border-med: 2px;
-$border-thin: 1px;
 $border-radius: 2px;
+
+$border-size-thick: 3px;
+$border-size-med: 2px;
+$border-size-thin: 1px;
+
+$border-color: $color-black;
+
+$border-thick: $border-size-thick solid $border-color;
+$border-med: $border-size-med solid $border-color;
+$border-thin: $border-size-thin solid $border-color;
+

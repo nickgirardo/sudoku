@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store';
 
@@ -5,6 +6,7 @@ import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
 import { EntryMode } from '../@types/sudoku';
 
+import { UnimplementedModal } from './UnimplementedModal';
 import { Button } from './Button';
 
 export const Controls = () => {
@@ -13,11 +15,19 @@ export const Controls = () => {
   const entryMode = useSelector((state: RootState) => state.mode);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
+  // If this not null, show the modal for the set feature
+  const [showModalFor, setShowModalFor] = useState<string | null>(null);
+
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
 
   return (
     <div className='controls'>
+      <UnimplementedModal
+        isOpen={ Boolean(showModalFor) }
+        closeHandler={ () => setShowModalFor(null) }
+        featureName={ showModalFor || '' }
+      />
       <Button
         label='Value'
         active={ entryMode === EntryMode.Value }
@@ -77,15 +87,15 @@ export const Controls = () => {
       </div>
       <Button
         label='Undo'
-        onClick={ () => {/* TODO */} }
+        onClick={ () => setShowModalFor('undo') }
       />
       <Button
         label='Redo'
-        onClick={ () => {/* TODO */} }
+        onClick={ () => setShowModalFor('redo') }
       />
       <Button
         label='Check'
-        onClick={ () => {/* TODO */} }
+        onClick={ () => setShowModalFor('checking this puzzle for mistakes') }
       />
     </div>
   );

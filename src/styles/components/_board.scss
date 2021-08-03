@@ -1,7 +1,7 @@
 .board {
   $cell-size: 54px;
-  $thick-pad: $border-thick;
-  $thin-pad: $border-thin;
+  $thick-pad: $border-size-thick;
+  $thin-pad: $border-size-thin;
 
   display: grid;
   grid-template-columns: repeat(9, 1fr);
