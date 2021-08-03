@@ -2,8 +2,8 @@
   $hover-color: $color-light-blue;
 
   padding: 0.5em;
-  border: 2px solid $color-black;
-  border-radius: 2px;
+  border: $border-med solid $color-black;
+  border-radius: $border-radius;
 
   background-color: $color-white;
   color: $color-black;
