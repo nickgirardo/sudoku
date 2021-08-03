@@ -5,12 +5,15 @@
   border: 2px solid $color-black;
   border-radius: 2px;
 
+  background-color: $color-white;
   color: $color-black;
+  font-family: "Noto Sans", sans-serif;
   font-size: 16px;
   font-weight: bold;
   text-align: center;
 
-  background-color: $color-white;
+  user-select: none;
+  cursor: pointer;
 
   &:not(.button-active):hover {
     background-color: $hover-color;
