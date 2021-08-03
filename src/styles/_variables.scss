@@ -6,6 +6,25 @@ $color-white: hsla(195, 1%, 98%, 1);
 $color-light-blue: hsla(195, 38%, 84%, 1);
 $color-mid-blue: hsla(195, 93%, 32%, 1);
 
+// SIZING
+:root {
+  // Phones
+  --cell-size: 32px;
+  --cell-value-size: 27px;
+  --cell-mark-size: 9px;
+  --cell-corner-mark-center-offset: 9px;
+  --cell-center-mark-word-spacing: -1px;
+
+  // Tablets and larger
+  @media (orientation: portrait) and (min-width: 560px),
+  (orientation:landscape) and (min-height: 560px) {
+    --cell-size: 56px;
+    --cell-value-size: 40px;
+    --cell-mark-size: 11px;
+    --cell-corner-mark-center-offset: 20px;
+    --cell-center-mark-word-spacing: normal;
+  }
+}
 
 // BORDERS
 $border-radius: 2px;

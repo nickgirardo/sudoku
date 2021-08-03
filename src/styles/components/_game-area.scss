@@ -5,9 +5,17 @@
   right: 0;
   bottom: 0;
 
+  max-height: 100vh;
+  max-width: 100vw;
+
   display: flex;
   justify-content: space-around;
   align-items: center;
+
+  @media (orientation: portrait) {
+    flex-direction: column;
+  }
+
 }
 
 

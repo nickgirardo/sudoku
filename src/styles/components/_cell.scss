@@ -8,7 +8,7 @@
     height: 100%;
     color: $color-mid-blue;
 
-    font-size: 40px;
+    font-size: var(--cell-value-size);
     text-align: center;
 
     position: relative;
@@ -24,6 +24,10 @@
       background-color: $color-light-blue;
     }
 
+    .centers {
+      font-size: var(--cell-mark-size);
+      word-spacing: var(--cell-center-mark-word-spacing);
+    }
     .corners {
       position: absolute;
       top: 0;
@@ -31,7 +35,7 @@
       bottom: 0;
       right: 0;
 
-      font-size: 11px;
+      font-size: var(--cell-mark-size);
       // TODO this is super janky lol
       :nth-child(1) {
         position: absolute;
@@ -67,23 +71,20 @@
       }
       :nth-child(7) {
         position: absolute;
-        top: 20px;
+        top: var(--cell-corner-mark-center-offset);
         left: 2px;
       }
       :nth-child(8) {
         position: absolute;
-        top: 20px;
+        top: var(--cell-corner-mark-center-offset);
         left: 0;
         right: 0;
       }
       :nth-child(9) {
         position: absolute;
-        top: 20px;
+        top: var(--cell-corner-mark-center-offset);
         right: 2px;
       }
-    }
-    .centers {
-      font-size: 11px;
     }
   }
 }
