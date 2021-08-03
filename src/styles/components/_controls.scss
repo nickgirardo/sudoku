@@ -1,5 +1,49 @@
 .controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  $grid-gap: 0.25em;
+
+  display: grid;
+  grid-gap: $grid-gap;
+  grid-template-columns: 2fr 3fr 2fr;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-areas:
+    "value  keypad undo"
+    "corner keypad redo"
+    "center keypad check"
+    "_empty keypad _nothing";
+
+  .button-value {
+    grid-area: value;
+  }
+  .button-corner {
+    grid-area: corner;
+  }
+  .button-center {
+    grid-area: center;
+  }
+  .keypad {
+    grid-area: keypad;
+
+    display: grid;
+    grid-gap: $grid-gap;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+      "1 2 3"
+      "4 5 6"
+      "7 8 9"
+      "_empty clear clear";
+
+      .button-clear {
+        grid-area: clear;
+      }
+  }
+  .button-undo {
+    grid-area: undo;
+  }
+  .button-redo {
+    grid-area: redo;
+  }
+  .button-check {
+    grid-area: check;
+  }
 }
