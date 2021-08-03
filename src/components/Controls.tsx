@@ -1,4 +1,3 @@
-import classnames from 'classnames';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store';
 
@@ -6,25 +5,7 @@ import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
 import { EntryMode } from '../@types/sudoku';
 
-interface ButtonProps {
-  label: string,
-  active?: boolean,
-  onClick: () => void,
-}
-
-const ControlButton = ({ active, label, onClick }: ButtonProps) => {
-  const classes = classnames(
-    'button',
-    active && 'button-active',
-    `button-${label.toLowerCase()}`,
-  );
-
-  return (
-    <button className={ classes } onClick={ onClick }>
-      { label }
-    </button>
-  );
-}
+import { Button } from './Button';
 
 export const Controls = () => {
   const dispatch = useAppDispatch();
@@ -38,72 +19,72 @@ export const Controls = () => {
 
   return (
     <div className='controls'>
-      <ControlButton
+      <Button
         label='Value'
         active={ entryMode === EntryMode.Value }
         onClick={() => dispatch(setMode(EntryMode.Value)) }
       />
-      <ControlButton
+      <Button
         label='Corner'
         active={ entryMode === EntryMode.Corner }
         onClick={() => dispatch(setMode(EntryMode.Corner)) }
       />
-      <ControlButton
+      <Button
         label='Center'
         active={ entryMode === EntryMode.Center }
         onClick={() => dispatch(setMode(EntryMode.Center)) }
       />
       <div className='keypad'>
-        <ControlButton
+        <Button
           label='1'
           onClick={() => numberEntry(1) }
         />
-        <ControlButton
+        <Button
           label='2'
           onClick={() => numberEntry(2) }
         />
-        <ControlButton
+        <Button
           label='3'
           onClick={() => numberEntry(3) }
         />
-        <ControlButton
+        <Button
           label='4'
           onClick={() => numberEntry(4) }
         />
-        <ControlButton
+        <Button
           label='5'
           onClick={() => numberEntry(5) }
         />
-        <ControlButton
+        <Button
           label='6'
           onClick={() => numberEntry(6) }
         />
-        <ControlButton
+        <Button
           label='7'
           onClick={() => numberEntry(7) }
         />
-        <ControlButton
+        <Button
           label='8'
           onClick={() => numberEntry(8) }
         />
-        <ControlButton
+        <Button
           label='9'
           onClick={() => numberEntry(9) }
         />
-        <ControlButton
+        <Button
           label='Clear'
           onClick={() => dispatch(clearCells(selectedCells)) }
         />
       </div>
-      <ControlButton
+      <Button
         label='Undo'
         onClick={() => {/* TODO */} }
       />
-      <ControlButton
+      <Button
         label='Redo'
         onClick={() => {/* TODO */} }
       />
-      <ControlButton
+      <Button
         label='Check'
         onClick={() => {/* TODO */} }
       />
