@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { uniq } from 'lodash';
 
 import { RootState, useAppDispatch } from '../store';
+import { selectCell, deselectAll } from '../store/selectedSlice';
 import { clearCells, setCells } from '../store/boardSlice';
 import { nextMode } from '../store/modeSlice';
 
@@ -15,20 +16,21 @@ export const GameArea = () => {
   const dispatch = useAppDispatch();
   const board = useSelector((state: RootState) => state.board);
   const entryMode = useSelector((state: RootState) => state.mode);
+  const selectedCells = useSelector((state: RootState) => state.selected);
 
   const [selectActive, setSelectActive] = useState(false);
-  const [selectedCells, setSelectedCells] = useState([] as Array<number>);
 
   const cellDown = (ix: number) => {
     setSelectActive(true);
-    setSelectedCells([ix]);
+    dispatch(deselectAll());
+    dispatch(selectCell(ix));
   };
 
   const cellOver = (ix: number) => {
     if (!selectActive)
       return;
 
-    setSelectedCells(uniq([...selectedCells, ix]));
+    dispatch(selectCell(ix));
   };
 
   const containerDown = (ev: MouseEvent) => {
@@ -42,7 +44,7 @@ export const GameArea = () => {
     // Clicking on the container
     // We're no longer selecting, and we should unselect everything we had
     setSelectActive(false);
-    setSelectedCells([]);
+    dispatch(deselectAll());
   };
 
   const keyDown = (ev: KeyboardEvent) => {

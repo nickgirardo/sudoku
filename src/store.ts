@@ -3,11 +3,13 @@ import { useDispatch } from 'react-redux';
 
 import { boardReducer } from './store/boardSlice';
 import { modeReducer } from './store/modeSlice';
+import { selectedReducer } from './store/selectedSlice';
 
 const store = configureStore({
   reducer: {
     board: boardReducer,
     mode: modeReducer,
+    selected: selectedReducer,
   },
 });
 
