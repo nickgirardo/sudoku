@@ -14,7 +14,78 @@ const decodeV0 = (param: string): (Array<[number, number]> | null) => {
   return decodedBoard;
 };
 
-const versions = new Map([['v0', decodeV0]]);
+// TODO describe this
+// TODO this needs to be tested significantly
+class BitReader {
+  raw: Uint8Array;
+  readIndex: number;
+
+  constructor(raw: Uint8Array) {
+    this.raw = raw;
+    this.readIndex = 0;
+  }
+
+  reset() {
+    this.readIndex = 0;
+  }
+
+  hasBitsRemaining(count:number): boolean {
+    const endingIndex = this.readIndex + count;
+    return endingIndex < this.raw.length * 8;
+  }
+
+  getBits(count: number): number {
+    // Make sure we don't read beyond the array bounds
+    const endingIndex = this.readIndex + count;
+    if (endingIndex > this.raw.length * 8) {
+      throw new Error('read to far');
+    }
+
+    let bitsRemaining = count;
+    let result = 0;
+    while (bitsRemaining > 0) {
+      const currentByte = Math.floor(this.readIndex / 8);
+      // How many bits can be read from the current byte?
+      const bitsAvailable = 8 - (this.readIndex % 8);
+
+      if (bitsRemaining <= bitsAvailable) {
+        const diff = bitsAvailable - bitsRemaining;
+        const mask = (2**bitsAvailable) - 1;
+        const data = (this.raw[currentByte] & mask) >>> diff;
+
+        result = (result << bitsRemaining) + data;
+        break;
+      } else {
+        // bitsRemaining > bitsAvailable
+        const mask = (2**bitsAvailable) - 1;
+        const data = this.raw[currentByte] & mask;
+        result = (result << bitsAvailable) + data;
+
+        this.readIndex += bitsAvailable;
+        bitsRemaining -= bitsAvailable;
+      }
+    }
+
+    this.readIndex = endingIndex;
+    return result;
+  }
+}
+const decodeV1 = (param: string): (Array<[number, number]> | null) => {
+  const raw = new Uint8Array(param.length);
+  for (let i = 0; i < param.length; i++) {
+    raw[i] = param.charCodeAt(i);
+  }
+  const reader = new BitReader(raw);
+  const board: Array<[number, number]> = [];
+
+  while(reader.hasBitsRemaining(11)) {
+    board.push([reader.getBits(7), reader.getBits(4)]);
+  }
+
+  return board;
+};
+
+const versions = new Map([['v0', decodeV0], ['v1', decodeV1]]);
 
 export const decodeBoard = (param: string): (Array<[number, number]> | null) => {
   const byteString = atob(param);
@@ -24,7 +95,8 @@ export const decodeBoard = (param: string): (Array<[number, number]> | null) => 
   }
 
   const givenVersion = byteString.slice(2, 4);
-  if (!Array.from(versions.keys()).includes(givenVersion)) {
+  const decoder = versions.get(givenVersion);
+  if (!decoder) {
     console.error(`The given level does not have a recognized version.
 Expected one of ${ Array.from(versions.keys()).join() }, received ${givenVersion}.`);
     return null;
@@ -32,12 +104,6 @@ Expected one of ${ Array.from(versions.keys()).join() }, received ${givenVersion
 
   // Now that we've finished checking the magic number and the version we can decode
   const boardString = byteString.slice(4);
-
-  const decoder = versions.get(givenVersion);
-  if (!decoder) {
-    console.error(`Unable to find relevant decoder.  This error should not occur.`);
-    return null;
-  }
 
   return decoder(boardString);
 };
