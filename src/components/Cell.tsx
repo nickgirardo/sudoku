@@ -1,15 +1,18 @@
 import classnames from 'classnames';
 
+import { MouseEvent, TouchEvent } from 'react';
 import { Cell as _Cell, CellType } from '../@types/sudoku';
 import { assertNever } from '../util';
 
 import { Marks } from './Marks';
 
 interface Props {
+  ix: number,
   cell: _Cell,
   isSelected: boolean,
-  handleMouseDown: () => void,
-  handleMouseOver: () => void,
+  handleMouseDown: (arg0: MouseEvent | TouchEvent) => void,
+  handleMouseOver: (arg0: MouseEvent) => void,
+  handleTouchMove: (arg0: TouchEvent) => void,
 }
 
 interface InnerProps {
@@ -39,8 +42,11 @@ export const Cell = (props: Props) => {
   return (
     <div
       className='cell'
+      data-index={ props.ix }
       onMouseDown={ props.handleMouseDown }
+      onTouchStart={ props.handleMouseDown }
       onMouseOver={ props.handleMouseOver }
+      onTouchMove={ props.handleTouchMove }
     >
       <div
         className={ innerClasses }

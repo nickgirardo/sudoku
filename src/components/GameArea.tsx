@@ -1,4 +1,4 @@
-import { useState, MouseEvent, KeyboardEvent } from 'react';
+import { useState, MouseEvent, TouchEvent, KeyboardEvent } from 'react';
 import { useSelector } from 'react-redux';
 
 import { uniq } from 'lodash';
@@ -33,7 +33,33 @@ export const GameArea = () => {
     dispatch(selectCell(ix));
   };
 
-  const containerDown = (ev: MouseEvent) => {
+  // This is a bit janky
+  // The touchmove event doesn't update the target as the mousemove does
+  // event.target will always refer to the element which was originally touched
+  // This isn't ideal, we'd prefer that the user can drag and grab a bunch of cells
+  // To combat this, we find the elements under the current current touch position
+  // and attempt to pick out the cell (the id of which we can find through its data)
+  const cellTouchMove = (ev: TouchEvent) => {
+    if (!selectActive)
+      return;
+
+    const touch = ev.touches.item(0);
+    let el = document.elementFromPoint(touch.clientX, touch.clientY) as (HTMLElement | null);
+
+    // Traverse up the chain of parents of the element under the point
+    while (el) {
+      // Have we found our cell yet?
+      if (Array.from(el.classList).includes('cell')) {
+        const index = el.dataset.index;
+        dispatch(selectCell(Number(el.dataset.index)));
+        return;
+      }
+      // If not, let's check its parent
+      el = el.parentElement;
+    }
+  }
+
+  const containerDown = (ev: MouseEvent | TouchEvent) => {
     // If we mouse down on (for instance) a cell which is a child of the container
     // we don't want to run the rest of this handler
     // This could also be handled by stopping the event propagation from within the cells
@@ -77,10 +103,12 @@ export const GameArea = () => {
   const cells = board.map((c, ix) =>
     <Cell
       key={ ix }
+      ix={ ix }
       cell={ c }
       isSelected={ selectedCells.includes(ix) }
       handleMouseDown={ () => cellDown(ix) }
       handleMouseOver={ () => cellOver(ix) }
+      handleTouchMove={ (ev: TouchEvent) => cellTouchMove(ev) }
     />
   );
 
@@ -88,7 +116,9 @@ export const GameArea = () => {
     <div
       className='game-area'
       onMouseUp={ () => setSelectActive(false) }
+      onTouchEnd={ () => setSelectActive(false) }
       onMouseDown={ ev => containerDown(ev) }
+      onTouchStart={ ev => containerDown(ev) }
       onKeyDown={ ev => keyDown(ev) }
       tabIndex={ 0 }
     >

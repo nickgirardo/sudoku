@@ -2,6 +2,15 @@
   box-sizing: border-box;
 }
 
+body {
+  position: fixed;
+  overflow: hidden;
+  inset: 0;
+  margin: 0;
+  overscroll-behavior: none;
+  touch-action: none;
+}
+
 @import 'variables.scss';
 
 @import 'components/game-area.scss';
