@@ -33,7 +33,7 @@ export class BitReader {
   }
   hasBitsRemaining(count:number): boolean {
     const endingIndex = this.readIndex + count;
-    return endingIndex < this.raw.length * 8;
+    return endingIndex <= this.raw.length * 8;
   }
 
   getBits(count: number): number {
