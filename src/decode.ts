@@ -18,11 +18,10 @@ const decodeV0 = (param: string): (Array<[number, number]> | null) => {
 // TODO this needs to be tested significantly
 class BitReader {
   raw: Uint8Array;
-  readIndex: number;
+  readIndex: number = 0;
 
   constructor(raw: Uint8Array) {
     this.raw = raw;
-    this.readIndex = 0;
   }
 
   reset() {
