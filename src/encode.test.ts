@@ -1,4 +1,7 @@
-import { BitWriter } from './encode';
+/*
+ * @jest-environment jsdom
+ */
+import { BitWriter, encodeBoard } from './encode';
 
 describe('BitWriter', () => {
   test('stores whole bytes', () => {
@@ -58,3 +61,22 @@ describe('BitWriter', () => {
     expect(() => writer.writeBits(9, 30)).toThrowError(RangeError);
   });
 });
+
+describe('encodeBoard', () => {
+  test('starts with magic number', () => {
+    const board: Array<[number, number]> = [[1,4], [5, 8], [30, 3]];
+    const base64 = encodeBoard(board);
+    const boardStr = atob(base64);
+
+    expect(() => boardStr.startsWith('S!'));
+  });
+
+  test('has expected version string', () => {
+    const board: Array<[number, number]> = [[1,4], [5, 8], [30, 3]];
+    const base64 = encodeBoard(board);
+    const boardStr = atob(base64);
+
+    expect(boardStr.slice(2, 4)).toEqual('v1');
+  });
+});
+
