@@ -25,7 +25,7 @@ describe('BitReader', () => {
         0b01,
       ];
       
-      let result = [
+      const result = [
         reader.getBits(4),
         reader.getBits(4),
         reader.getBits(6),
@@ -46,10 +46,39 @@ describe('BitReader', () => {
         0b1001_1,
       ];
       
-      let result = [
+      const result = [
         reader.getBits(6),
         reader.getBits(6),
         reader.getBits(5),
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    test('read multiple bytes', () => {
+      const data = [0xFA, 0xF9, 0xCC, 0xAA];
+      const reader = new BitReader(new Uint8Array(data));
+
+      const expected = [0xFAF9, 0xCCAA];
+
+      const result = [
+        reader.getBits(16),
+        reader.getBits(16),
+      ];
+
+      expect(result).toEqual(expected);
+    });
+
+    test('read multiple bytes (across byte boundries)', () => {
+      const data = [0xFA, 0xF9, 0xCC, 0xAA];
+      const reader = new BitReader(new Uint8Array(data));
+
+      const expected = [0xF, 0xAF9C, 0xCAA];
+
+      const result = [
+        reader.getBits(4),
+        reader.getBits(16),
+        reader.getBits(12),
       ];
 
       expect(result).toEqual(expected);
