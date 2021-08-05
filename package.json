@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start:dev": "webpack serve --config webpack.dev.js",
-    "publish": "webpack --config webpack.prod.js",
+    "start:player": "webpack serve --config conf/webpack.dev.player.js",
+    "start:builder": "webpack serve --config conf/webpack.dev.builder.js",
+    "publish": "(webpack --config conf/webpack.prod.builder.js; webpack --config conf/webpack.prod.player.js)",
     "test": "jest --verbose"
   },
   "keywords": [],
