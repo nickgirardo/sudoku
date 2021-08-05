@@ -14,7 +14,6 @@ describe('BitReader', () => {
       expect(result).toEqual(data);
     });
 
-    // TODO hasBitsRemaining seems broken
     test('reads bits (ending on byte boundries)', () => {
       const data = [0xFA, 0xF9];
       const reader = new BitReader(new Uint8Array(data));
