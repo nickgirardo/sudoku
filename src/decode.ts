@@ -16,7 +16,7 @@ const decodeV0 = (param: string): (Array<[number, number]> | null) => {
 
 // TODO describe this
 // TODO this needs to be tested significantly
-class BitReader {
+export class BitReader {
   raw: Uint8Array;
   readIndex: number = 0;
 

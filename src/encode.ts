@@ -2,7 +2,7 @@
 
 // TODO describe this
 // TODO this needs to be tested significantly
-class BitWriter {
+export class BitWriter {
   arr: Array<number> = [];
   writeBit: number = 0;
 
