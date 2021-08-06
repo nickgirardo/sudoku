@@ -89,8 +89,23 @@ const decodeV1 = (param: string): (Array<[number, number]> | null) => {
 
 const versions = new Map([['v0', decodeV0], ['v1', decodeV1]]);
 
+// Simple wrapper to have atob return null instead of throwing
+const _atob = (param: string): (string | null) => {
+  try {
+    return atob(param);
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
 export const decodeBoard = (param: string): (Array<[number, number]> | null) => {
-  const byteString = atob(param);
+  const byteString = _atob(param);
+
+  // If unable to parse the _atob wrapper will have already logged an error
+  if (!byteString)
+    return null;
+
   if (!byteString.startsWith(magic)) {
     console.error('The given level does not start with the magic string "S!". It may be corrupted');
     return null;
