@@ -6,8 +6,17 @@ import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
 import { EntryMode } from '../@types/sudoku';
 
+import { assertNever } from '../util';
+
 import { UnimplementedModal } from './UnimplementedModal';
 import { Button } from './Button';
+
+enum UnimplFeature {
+  None,
+  UndoUnimplemented,
+  RedoUnimplemented,
+  CheckUnimplemented,
+}
 
 export const Controls = () => {
   const dispatch = useAppDispatch();
@@ -15,18 +24,34 @@ export const Controls = () => {
   const entryMode = useSelector((state: RootState) => state.mode);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
-  // If this not null, show the modal for the set feature
-  const [showModalFor, setShowModalFor] = useState<string | null>(null);
+  const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
 
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
 
+  const getFeatureName = (modal: UnimplFeature): string => {
+    switch (modal) {
+      case UnimplFeature.None:
+        // This shouldn't occur
+        // The modal will not be shown if None is set
+        return '';
+      case UnimplFeature.UndoUnimplemented:
+        return 'undo';
+      case UnimplFeature.RedoUnimplemented:
+        return 'redo';
+      case UnimplFeature.CheckUnimplemented:
+        return 'checking this puzzle for mistakes';
+      default:
+        return assertNever(modal);
+    }
+  };
+
   return (
     <div className='controls player-controls'>
       <UnimplementedModal
-        isOpen={ Boolean(showModalFor) }
-        closeHandler={ () => setShowModalFor(null) }
-        featureName={ showModalFor || '' }
+        isOpen={ showUnimplModal !== UnimplFeature.None }
+        closeHandler={ () => setShowUnimplModal(UnimplFeature.None) }
+        featureName={ getFeatureName(showUnimplModal) }
       />
       <Button
         label='Value'
@@ -87,15 +112,15 @@ export const Controls = () => {
       </div>
       <Button
         label='Undo'
-        onClick={ () => setShowModalFor('undo') }
+        onClick={ () => setShowUnimplModal(UnimplFeature.UndoUnimplemented) }
       />
       <Button
         label='Redo'
-        onClick={ () => setShowModalFor('redo') }
+        onClick={ () => setShowUnimplModal(UnimplFeature.RedoUnimplemented) }
       />
       <Button
         label='Check'
-        onClick={ () => setShowModalFor('checking this puzzle for mistakes') }
+        onClick={ () => setShowUnimplModal(UnimplFeature.CheckUnimplemented) }
       />
     </div>
   );
