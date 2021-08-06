@@ -100,7 +100,10 @@ const _atob = (param: string): (string | null) => {
 };
 
 export const decodeBoard = (param: string): (Array<[number, number]> | null) => {
-  const byteString = _atob(param);
+  // NOTE when getting query parameters, + is often replaced with a space character
+  // For ergonomics, we will just change them all back here
+  // This is easier then depending on the caller to handle this
+  const byteString = _atob(param.replaceAll(' ', '+'));
 
   // If unable to parse the _atob wrapper will have already logged an error
   if (!byteString)
