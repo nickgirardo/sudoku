@@ -1,0 +1,8 @@
+a {
+  cursor: pointer;
+  color: $color-mid-blue;
+  text-decoration: underline;
+
+  &:link { color: $color-mid-blue; }
+  &:visited { color: $color-mid-blue; }
+}

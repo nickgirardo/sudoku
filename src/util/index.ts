@@ -13,6 +13,19 @@ export const assertNever = (x: never): never => {
   throw new Error(`Unexpected: ${x}`);
 };
 
+export const boardValues = (board: Array<Cell>): Array<[number, number]> => {
+  const result:Array<[number, number]> = [];
+  for (const [ix, cell] of board.entries()) {
+    if (cell.kind === CellType.Given || cell.kind === CellType.Value) {
+      result.push([ix, cell.value]);
+    }
+  }
+  return result;
+};
+
+export const relativeToAbsolute = (url: string): string =>
+  new URL(url, document.baseURI).href;
+
 // Ideally these awkward functions would just be constructor methods
 // However, redux complains about serializability when I make the cells class objects
 export const newGivenCell = (value: number): GivenCell =>

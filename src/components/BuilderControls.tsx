@@ -8,6 +8,7 @@ import { EntryMode } from '../@types/sudoku';
 
 import { assertNever } from '../util';
 
+import { ShareModal } from './ShareModal';
 import { UnimplementedModal } from './UnimplementedModal';
 import { Button } from './Button';
 
@@ -16,7 +17,6 @@ enum UnimplFeature {
   UndoUnimplemented,
   RedoUnimplemented,
   CheckUnimplemented,
-  ShareUnimplemented,
 }
 
 export const Controls = () => {
@@ -25,6 +25,7 @@ export const Controls = () => {
   const entryMode = useSelector((state: RootState) => state.mode);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
+  const [showShareModal, setShowShareModal] = useState(false);
   const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
 
   const getFeatureName = (modal: UnimplFeature): string => {
@@ -39,8 +40,6 @@ export const Controls = () => {
         return 'redo';
       case UnimplFeature.CheckUnimplemented:
         return 'checking this puzzle for mistakes';
-      case UnimplFeature.ShareUnimplemented:
-        return 'sharing puzzles';
       default:
         return assertNever(modal);
     }
@@ -51,6 +50,10 @@ export const Controls = () => {
 
   return (
     <div className='controls builder-controls'>
+      <ShareModal
+        isOpen={ showShareModal }
+        closeHandler={ () => setShowShareModal(false) }
+      />
       <UnimplementedModal
         isOpen={ showUnimplModal !== UnimplFeature.None }
         closeHandler={ () => setShowUnimplModal(UnimplFeature.None) }
@@ -112,7 +115,7 @@ export const Controls = () => {
       />
       <Button
         label='Share'
-        onClick={ () => setShowUnimplModal(UnimplFeature.ShareUnimplemented) }
+        onClick={ () => setShowShareModal(true) }
       />
     </div>
   );
