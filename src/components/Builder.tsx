@@ -12,7 +12,7 @@ export const Builder = () => {
   dispatch(setValidModes([EntryMode.Value]));
 
   return (
-    <GameArea builder>
+    <GameArea className='builder'>
       <Controls />
     </GameArea>
   );

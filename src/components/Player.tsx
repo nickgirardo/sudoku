@@ -21,7 +21,7 @@ export const Player = () => {
   }
 
   return (
-    <GameArea>
+    <GameArea className='player'>
       <Controls />
     </GameArea>
   );

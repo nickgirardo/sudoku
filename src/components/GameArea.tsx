@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { useSelector } from 'react-redux';
 
+import classnames from 'classnames';
 import { uniq } from 'lodash';
 
 import { RootState, useAppDispatch } from '../store';
@@ -20,10 +21,10 @@ import { Cell } from './Cell';
 
 interface Props {
   children: ReactElement;
-  builder?: boolean;
+  className?: string;
 }
 
-export const GameArea = ({ children, builder }: Props): ReactElement => {
+export const GameArea = ({ children, className }: Props): ReactElement => {
   const dispatch = useAppDispatch();
   const board = useSelector((state: RootState) => state.board);
   const entryMode = useSelector((state: RootState) => state.mode.current);
@@ -120,13 +121,12 @@ export const GameArea = ({ children, builder }: Props): ReactElement => {
       handleMouseDown={ () => cellDown(ix) }
       handleMouseOver={ () => cellOver(ix) }
       handleTouchMove={ (ev: TouchEvent) => cellTouchMove(ev) }
-      builder={ builder }
     />
   );
 
   return (
     <div
-      className='game-area'
+      className={ classnames('game-area', className) }
       onMouseUp={ () => setSelectActive(false) }
       onTouchEnd={ () => setSelectActive(false) }
       onMouseDown={ ev => containerDown(ev) }

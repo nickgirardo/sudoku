@@ -13,7 +13,6 @@ interface Props {
   handleMouseDown: (arg0: MouseEvent | TouchEvent) => void,
   handleMouseOver: (arg0: MouseEvent) => void,
   handleTouchMove: (arg0: TouchEvent) => void,
-  builder?: boolean,
 }
 
 interface InnerProps {
@@ -38,7 +37,6 @@ export const Cell = (props: Props) => {
     'cell-inner',
     props.isSelected && 'cell-inner-selected',
     props.cell.kind === CellType.Given && 'cell-inner-given',
-    props.builder && 'cell-inner-builder',
   );
 
   return (

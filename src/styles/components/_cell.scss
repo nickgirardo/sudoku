@@ -1,3 +1,10 @@
+// Always use black for the builder
+.game-area.builder {
+  .cell-inner {
+    color: $color-black;
+  }
+}
+
 .cell {
   user-select: none;
   background-color: transparent;
@@ -16,8 +23,7 @@
     align-items: center;
     justify-content: center;
 
-    // Given cells and all cells in builder mode are black
-    &.cell-inner-given, &.cell-inner-builder {
+    &.cell-inner-given {
       color: $color-black;
     }
 
