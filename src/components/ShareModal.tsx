@@ -32,6 +32,7 @@ export const ShareModal = (props:Props) => {
   };
 
   // TODO the copy link button has no feedback right now
+  // TODO truncate playerLink
   return (
     <Modal
       className='modal'
