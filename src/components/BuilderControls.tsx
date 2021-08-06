@@ -22,7 +22,7 @@ enum UnimplFeature {
 export const Controls = () => {
   const dispatch = useAppDispatch();
 
-  const entryMode = useSelector((state: RootState) => state.mode);
+  const entryMode = useSelector((state: RootState) => state.mode.current);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
   const [showShareModal, setShowShareModal] = useState(false);

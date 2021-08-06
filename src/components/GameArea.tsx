@@ -26,7 +26,7 @@ interface Props {
 export const GameArea = ({ children, builder }: Props): ReactElement => {
   const dispatch = useAppDispatch();
   const board = useSelector((state: RootState) => state.board);
-  const entryMode = useSelector((state: RootState) => state.mode);
+  const entryMode = useSelector((state: RootState) => state.mode.current);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
   const [selectActive, setSelectActive] = useState(false);
@@ -97,7 +97,7 @@ export const GameArea = ({ children, builder }: Props): ReactElement => {
       dispatch(clearCells(selectedCells));
 
     // Advance the entry mode
-    if (!builder && ev.key === ' ')
+    if (ev.key === ' ')
       dispatch(nextMode());
 
     // Undo
