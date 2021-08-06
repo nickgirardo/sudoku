@@ -39,7 +39,7 @@ export const ShareModal = (props:Props) => {
       shouldCloseOnOverlayClick={ true }
       { ...reactModalProps }
     >
-      <h2 className='modal-title'> Share Puzzle</h2>
+      <h2 className='modal-title'>Share Puzzle</h2>
       <p>
         Here is a link to your board:&nbsp;
         <a target='_blank' href={ playerLink }>{ absoluteLink }</a>
