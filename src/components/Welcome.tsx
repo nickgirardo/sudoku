@@ -12,10 +12,10 @@ const ExampleLink = ({ link }: LinkProps) => (
 
 // TODO example puzzles
 const examplePuzzles = [
-  'player.html?play=UyF2MQDA3CMHMUwxxrEHJsUIqRZy7mHMmbI4R0jxHyQOhdKSZk7qHUkqJWa517MXZOzJoTUm7uWdM7N4z1n7wziHFeM0dpByTnOA',
-  'TODO',
-  'TODO',
-  'TODO',
+  'player.html?play=UyF2MQRhyECJQWIySCkiKoXU+yAUcJiTwoVTKoVqsHYm5V3D54DxCitHWQclJ0g=',
+  'player.html?play=UyF2MQxjGHGQQnBVC0mBNEdc8R9UDJFTIqhYLCGIskZk2RwTpnYvZgTCOIUpQA==',
+  'player.html?play=UyF2MQSgzDMHgSYqBcjBJOaM/CA0TpVTEqNWi52DMSbK+GIUWYyx0knKeaM6AA==',
+  'player.html?play=UyF2MQShGEsOUehCCploMyaY3BxDzISSsrde7KGjNUbC3N0rt4DwShDHiZM4QA==',
 ];
 
 export const Welcome = () => (
