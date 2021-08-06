@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 import { Provider } from 'react-redux';
 import store from './store';
 
-import { App } from './components/App';
+import { Player } from './components/Player';
 
 import './styles/style.scss';
 
@@ -16,7 +16,7 @@ Modal.setAppElement(wrapper);
 
 render(
   <Provider store={store}>
-    <App />
+    <Player />
   </Provider>,
   wrapper
 )

@@ -5,7 +5,7 @@ import { setupBoard } from '../store/boardSlice';
 
 import { GameArea } from './GameArea';
 
-export const App = () => {
+export const Player = () => {
   const dispatch = useAppDispatch();
 
   const urlParams = new URLSearchParams(location.search);

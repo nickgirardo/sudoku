@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   ...base,
-  entry: { builder: './src/app.tsx' },
+  entry: { builder: './src/builder.tsx' },
   plugins: [
     new HtmlWebpackPlugin({
       template: './src/builder.html',
