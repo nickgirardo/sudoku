@@ -22,26 +22,11 @@ export const Controls = () => {
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
 
   return (
-    <div className='controls'>
+    <div className='controls builder-controls'>
       <UnimplementedModal
         isOpen={ Boolean(showModalFor) }
         closeHandler={ () => setShowModalFor(null) }
         featureName={ showModalFor || '' }
-      />
-      <Button
-        label='Value'
-        active={ entryMode === EntryMode.Value }
-        onClick={ () => dispatch(setMode(EntryMode.Value)) }
-      />
-      <Button
-        label='Corner'
-        active={ entryMode === EntryMode.Corner }
-        onClick={ () => dispatch(setMode(EntryMode.Corner)) }
-      />
-      <Button
-        label='Center'
-        active={ entryMode === EntryMode.Center }
-        onClick={ () => dispatch(setMode(EntryMode.Center)) }
       />
       <div className='keypad'>
         <Button
@@ -96,6 +81,10 @@ export const Controls = () => {
       <Button
         label='Check'
         onClick={ () => setShowModalFor('checking this puzzle for mistakes') }
+      />
+      <Button
+        label='Share'
+        onClick={ () => setShowModalFor('sharing puzzles') }
       />
     </div>
   );

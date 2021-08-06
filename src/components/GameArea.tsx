@@ -1,4 +1,10 @@
-import { useState, MouseEvent, TouchEvent, KeyboardEvent } from 'react';
+import {
+  ReactElement,
+  useState,
+  MouseEvent,
+  TouchEvent,
+  KeyboardEvent
+} from 'react';
 import { useSelector } from 'react-redux';
 
 import { uniq } from 'lodash';
@@ -8,11 +14,16 @@ import { selectCell, deselectAll } from '../store/selectedSlice';
 import { clearCells, setCells } from '../store/boardSlice';
 import { nextMode } from '../store/modeSlice';
 
-import { Controls } from './Controls';
+import { Controls } from './PlayerControls';
 import { Board } from './Board';
 import { Cell } from './Cell';
 
-export const GameArea = () => {
+interface Props {
+  children: ReactElement;
+  builder?: boolean;
+}
+
+export const GameArea = ({ children, builder }: Props): ReactElement => {
   const dispatch = useAppDispatch();
   const board = useSelector((state: RootState) => state.board);
   const entryMode = useSelector((state: RootState) => state.mode);
@@ -86,7 +97,7 @@ export const GameArea = () => {
       dispatch(clearCells(selectedCells));
 
     // Advance the entry mode
-    if (ev.key === ' ')
+    if (!builder && ev.key === ' ')
       dispatch(nextMode());
 
     // Undo
@@ -109,6 +120,7 @@ export const GameArea = () => {
       handleMouseDown={ () => cellDown(ix) }
       handleMouseOver={ () => cellOver(ix) }
       handleTouchMove={ (ev: TouchEvent) => cellTouchMove(ev) }
+      builder={ builder }
     />
   );
 
@@ -125,7 +137,7 @@ export const GameArea = () => {
       <Board>
         { cells }
       </Board>
-      <Controls />
+      { children }
     </div>
   );
 }

@@ -3,13 +3,29 @@
 
   display: grid;
   grid-gap: $grid-gap;
-  grid-template-columns: 2fr 3fr 2fr;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-areas:
-    "value  keypad undo"
-    "corner keypad redo"
-    "center keypad check"
-    "_empty keypad _nothing";
+
+  // Different layouts for player and builder defined here
+  &.player-controls {
+    grid-template-columns: 2fr 3fr 2fr;
+    grid-template-rows: repeat(4, 1fr);
+
+    grid-template-areas:
+      "value  keypad undo"
+      "corner keypad redo"
+      "center keypad check"
+      ".      keypad .";
+  }
+
+  &.builder-controls {
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: repeat(4, 1fr);
+
+    grid-template-areas:
+      "keypad undo"
+      "keypad redo"
+      "keypad check"
+      "keypad share";
+  }
 
   .button-value {
     grid-area: value;
@@ -45,5 +61,8 @@
   }
   .button-check {
     grid-area: check;
+  }
+  .button-share {
+    grid-area: share;
   }
 }

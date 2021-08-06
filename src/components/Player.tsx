@@ -4,6 +4,7 @@ import { useAppDispatch } from '../store';
 import { setupBoard } from '../store/boardSlice';
 
 import { GameArea } from './GameArea';
+import { Controls } from './PlayerControls';
 
 export const Player = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,8 @@ export const Player = () => {
   }
 
   return (
-    <GameArea />
+    <GameArea>
+      <Controls />
+    </GameArea>
   );
 }

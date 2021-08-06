@@ -16,7 +16,8 @@
     align-items: center;
     justify-content: center;
 
-    &.cell-inner-given {
+    // Given cells and all cells in builder mode are black
+    &.cell-inner-given, &.cell-inner-builder {
       color: $color-black;
     }
 
