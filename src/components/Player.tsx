@@ -5,6 +5,7 @@ import { encodeBoard } from '../encode';
 import { useAppDispatch } from '../store';
 import { setupBoard } from '../store/boardSlice';
 
+import { Welcome } from './Welcome';
 import { GameArea } from './GameArea';
 import { Controls } from './PlayerControls';
 import { CorruptModal } from './CorruptModal';
@@ -47,6 +48,6 @@ export const Player = () => {
   // TODO the player doesn't have a board string
   // Show a welcome message here, link to builder and some sample boards?
   return (
-    <></>
+    <Welcome />
   );
 }

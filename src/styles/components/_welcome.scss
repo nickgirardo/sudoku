@@ -1,0 +1,13 @@
+.welcome {
+  max-width: 80ch;
+  padding: 1em;
+  overflow: hidden;
+
+  a.example {
+    display: block;
+    max-width: 60ch;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
