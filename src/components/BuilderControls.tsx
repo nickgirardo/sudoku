@@ -4,11 +4,15 @@ import { RootState, useAppDispatch } from '../store';
 
 import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
-import { EntryMode } from '../@types/sudoku';
+import { EntryMode, UniquenessCheckResult } from '../@types/sudoku';
 
 import { assertNever } from '../util';
+import { checkUniqelySolvable } from '../util/checkers';
 
-import { ShareModal } from './ShareModal';
+import { ShareModal } from './modals/ShareModal';
+import { NotUniqModal } from './modals/NotUniqModal';
+import { NoSolnModal } from './modals/NoSolnModal';
+import { UniqSolnModal } from './modals/UniqSolnModal';
 import { UnimplementedModal } from './modals/UnimplementedModal';
 import { Button } from './Button';
 
@@ -16,7 +20,6 @@ enum UnimplFeature {
   None,
   UndoUnimplemented,
   RedoUnimplemented,
-  CheckUnimplemented,
 }
 
 export const Controls = () => {
@@ -24,8 +27,10 @@ export const Controls = () => {
 
   const entryMode = useSelector((state: RootState) => state.mode.current);
   const selectedCells = useSelector((state: RootState) => state.selected);
+  const board = useSelector((state: RootState) => state.board);
 
   const [showShareModal, setShowShareModal] = useState(false);
+  const [showCheckModal, setShowCheckModal] = useState<UniquenessCheckResult | false>(false);
   const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
 
   const getFeatureName = (modal: UnimplFeature): string => {
@@ -38,8 +43,6 @@ export const Controls = () => {
         return 'undo';
       case UnimplFeature.RedoUnimplemented:
         return 'redo';
-      case UnimplFeature.CheckUnimplemented:
-        return 'checking this puzzle for mistakes';
       default:
         return assertNever(modal);
     }
@@ -53,6 +56,18 @@ export const Controls = () => {
       <ShareModal
         isOpen={ showShareModal }
         closeHandler={ () => setShowShareModal(false) }
+      />
+      <NotUniqModal
+        isOpen={ showCheckModal === UniquenessCheckResult.NOT_UNIQUE }
+        closeHandler={ () => setShowCheckModal(false) }
+      />
+      <NoSolnModal
+        isOpen={ showCheckModal === UniquenessCheckResult.NO_SOLUTION }
+        closeHandler={ () => setShowCheckModal(false) }
+      />
+      <UniqSolnModal
+        isOpen={ showCheckModal === UniquenessCheckResult.UNIQUE_SOLUTION }
+        closeHandler={ () => setShowCheckModal(false) }
       />
       <UnimplementedModal
         isOpen={ showUnimplModal !== UnimplFeature.None }
@@ -111,7 +126,7 @@ export const Controls = () => {
       />
       <Button
         label='Check'
-        onClick={ () => setShowUnimplModal(UnimplFeature.CheckUnimplemented) }
+        onClick={ () => setShowCheckModal(checkUniqelySolvable(board)) }
       />
       <Button
         label='Share'

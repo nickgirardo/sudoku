@@ -2,12 +2,12 @@ import { MouseEvent } from 'react';
 import { useSelector } from 'react-redux';
 import Modal, { Props as ReactModalProps } from 'react-modal';
 
-import { RootState } from '../store';
+import { RootState } from '../../store';
 
-import { boardValues, relativeToAbsolute } from '../util';
-import { encodeBoard } from '../encode';
+import { boardValues, relativeToAbsolute } from '../../util';
+import { encodeBoard } from '../../encode';
 
-import { Button } from './Button';
+import { Button } from '../Button';
 
 interface OwnProps {
   closeHandler: (arg0: MouseEvent) => void,
