@@ -6,7 +6,8 @@ import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
 import { EntryMode } from '../@types/sudoku';
 
-import { assertNever, checkBoard } from '../util';
+import { assertNever } from '../util';
+import { checkSolution } from '../util/checkers';
 
 import { UnimplementedModal } from './modals/UnimplementedModal';
 import { ValidModal } from './modals/ValidModal';
@@ -49,7 +50,7 @@ export const Controls = () => {
   };
 
   const showBoardCheckModal = () => {
-    const correct = checkBoard(board);
+    const correct = checkSolution(board);
 
     if (correct)
       setShowValidModal(true);
