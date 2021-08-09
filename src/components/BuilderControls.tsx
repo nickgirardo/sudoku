@@ -9,7 +9,7 @@ import { EntryMode } from '../@types/sudoku';
 import { assertNever } from '../util';
 
 import { ShareModal } from './ShareModal';
-import { UnimplementedModal } from './UnimplementedModal';
+import { UnimplementedModal } from './modals/UnimplementedModal';
 import { Button } from './Button';
 
 enum UnimplFeature {

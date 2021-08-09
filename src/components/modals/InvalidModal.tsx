@@ -1,17 +1,15 @@
 import { MouseEvent } from 'react';
 import Modal, { Props as ReactModalProps } from 'react-modal';
 
-import { Button } from './Button';
+import { Button } from '../Button';
 
 interface OwnProps {
-  featureName: string,
   closeHandler: (arg0: MouseEvent) => void,
 }
 type Props = OwnProps & ReactModalProps;
 
-export const UnimplementedModal = (props:Props) => {
+export const InvalidModal = (props:Props) => {
   const {
-    featureName,
     closeHandler,
     ...reactModalProps
   } = props;
@@ -23,8 +21,8 @@ export const UnimplementedModal = (props:Props) => {
       shouldCloseOnOverlayClick={ true }
       { ...reactModalProps }
     >
-      <h2 className='modal-title'> Not Implemented </h2>
-      <p> Unfortunately, { featureName } has not yet been implemented. </p>
+      <h2 className='modal-title'>Not quite</h2>
+      <p>This doesn't look quite right to me, sorry :(</p>
       <div>
         <Button
           compact

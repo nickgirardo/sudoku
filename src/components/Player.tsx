@@ -8,7 +8,7 @@ import { setupBoard } from '../store/boardSlice';
 import { Welcome } from './Welcome';
 import { GameArea } from './GameArea';
 import { Controls } from './PlayerControls';
-import { CorruptModal } from './CorruptModal';
+import { CorruptModal } from './modals/CorruptModal';
 
 export const Player = () => {
   const dispatch = useAppDispatch();

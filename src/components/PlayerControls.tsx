@@ -8,9 +8,9 @@ import { EntryMode } from '../@types/sudoku';
 
 import { assertNever, checkBoard } from '../util';
 
-import { UnimplementedModal } from './UnimplementedModal';
-import { ValidModal } from './ValidModal';
-import { InvalidModal } from './InvalidModal';
+import { UnimplementedModal } from './modals/UnimplementedModal';
+import { ValidModal } from './modals/ValidModal';
+import { InvalidModal } from './modals/InvalidModal';
 import { Button } from './Button';
 
 enum UnimplFeature {
