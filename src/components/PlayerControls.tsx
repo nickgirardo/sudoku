@@ -6,25 +6,29 @@ import { setMode } from '../store/modeSlice';
 import { setCells, clearCells } from '../store/boardSlice';
 import { EntryMode } from '../@types/sudoku';
 
-import { assertNever } from '../util';
+import { assertNever, checkBoard } from '../util';
 
 import { UnimplementedModal } from './UnimplementedModal';
+import { ValidModal } from './ValidModal';
+import { InvalidModal } from './InvalidModal';
 import { Button } from './Button';
 
 enum UnimplFeature {
   None,
   UndoUnimplemented,
   RedoUnimplemented,
-  CheckUnimplemented,
 }
 
 export const Controls = () => {
   const dispatch = useAppDispatch();
 
   const entryMode = useSelector((state: RootState) => state.mode.current);
+  const board = useSelector((state: RootState) => state.board);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
   const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
+  const [showValidModal, setShowValidModal] = useState(false);
+  const [showInvalidModal, setShowInvalidModal] = useState(false);
 
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
@@ -39,11 +43,18 @@ export const Controls = () => {
         return 'undo';
       case UnimplFeature.RedoUnimplemented:
         return 'redo';
-      case UnimplFeature.CheckUnimplemented:
-        return 'checking this puzzle for mistakes';
       default:
         return assertNever(modal);
     }
+  };
+
+  const showBoardCheckModal = () => {
+    const correct = checkBoard(board);
+
+    if (correct)
+      setShowValidModal(true);
+    else
+      setShowInvalidModal(true);
   };
 
   return (
@@ -52,6 +63,14 @@ export const Controls = () => {
         isOpen={ showUnimplModal !== UnimplFeature.None }
         closeHandler={ () => setShowUnimplModal(UnimplFeature.None) }
         featureName={ getFeatureName(showUnimplModal) }
+      />
+      <ValidModal
+        isOpen={ showValidModal }
+        closeHandler={ () => setShowValidModal(false) }
+      />
+      <InvalidModal
+        isOpen={ showInvalidModal }
+        closeHandler={ () => setShowInvalidModal(false) }
       />
       <Button
         label='Value'
@@ -120,7 +139,7 @@ export const Controls = () => {
       />
       <Button
         label='Check'
-        onClick={ () => setShowUnimplModal(UnimplFeature.CheckUnimplemented) }
+        onClick={ showBoardCheckModal }
       />
     </div>
   );
