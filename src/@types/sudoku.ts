@@ -1,5 +1,11 @@
 export type CellIndex = number;
 
+export enum UniquenessCheckResult {
+  NO_SOLUTION,
+  NOT_UNIQUE,
+  UNIQUE_SOLUTION,
+}
+
 export enum CellType {
   Given,
   Value,
