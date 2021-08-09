@@ -32,9 +32,13 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
 
   const [selectActive, setSelectActive] = useState(false);
 
-  const cellDown = (ix: number) => {
+  const cellDown = (ev: (MouseEvent | TouchEvent), ix: number) => {
     setSelectActive(true);
-    dispatch(deselectAll());
+
+    // Don't reset the previous selections if shift is held down
+    if (!ev.shiftKey)
+      dispatch(deselectAll());
+
     dispatch(selectCell(ix));
   };
 
@@ -118,7 +122,7 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
       ix={ ix }
       cell={ c }
       isSelected={ selectedCells.includes(ix) }
-      handleMouseDown={ () => cellDown(ix) }
+      handleMouseDown={ (ev: MouseEvent | TouchEvent) => cellDown(ev, ix) }
       handleMouseOver={ () => cellOver(ix) }
       handleTouchMove={ (ev: TouchEvent) => cellTouchMove(ev) }
     />
