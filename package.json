@@ -6,7 +6,7 @@
     "start:player": "webpack serve --config conf/webpack.dev.player.js",
     "start:builder": "webpack serve --config conf/webpack.dev.builder.js",
     "publish": "(webpack --config conf/webpack.prod.builder.js; webpack --config conf/webpack.prod.player.js)",
-    "test": "jest --verbose"
+    "test": "jest --config jest.config.js"
   },
   "keywords": [],
   "author": "Nick Girardo",

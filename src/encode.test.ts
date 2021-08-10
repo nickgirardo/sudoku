@@ -1,6 +1,3 @@
-/*
- * @jest-environment jsdom
- */
 import { BitWriter, encodeBoard } from './encode';
 
 describe('BitWriter', () => {

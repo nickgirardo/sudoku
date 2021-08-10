@@ -1,6 +1,3 @@
-/*
- * @jest-environment jsdom
- */
 import { BitReader } from './decode';
 
 describe('BitReader', () => {
