@@ -1,10 +1,9 @@
 declare module 'boolean-sat' {
   // Note that as the first variable (0) is unused (it cannot be negated)
   // so the first element in the array is always null
-  export type SATSolution = Array<boolean | null>;
+  export type SATSolution = [null, ...number[]];
 
-  // Returns a solution
-  // Returns false if unsatisfyable
+  // Returns a solution if satisfiable or false if unsatisfiable
   function satSolve(
     size: number,
     clauses: Array<Array<number>>
