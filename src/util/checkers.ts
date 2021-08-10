@@ -194,4 +194,8 @@ export const checkSolution = (board: Array<Cell>): boolean => {
   );
 };
 
-
+// Exporting these for testing purposes
+export {
+  sudokuClauses as _sudokuClauses,
+  solutionToClause as _solutionToClause,
+};
