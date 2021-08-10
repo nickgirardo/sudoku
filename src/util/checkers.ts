@@ -24,11 +24,7 @@ const sudokuClauses = (board: Array<[number, number]>): Array<Array<number>> => 
 
   for (const c of cells) {
     // This clause states that each cell must have some value
-    let cellClause = [];
-    for (const d of range) {
-      cellClause.push(inCell(d, c));
-    }
-    clauses.push(cellClause);
+    clauses.push(range.map(d => inCell(d, c)));
 
     // These clauses state that each cell may not have multiple values
     for (const i of range) {
