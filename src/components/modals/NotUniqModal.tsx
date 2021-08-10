@@ -22,7 +22,7 @@ export const NotUniqModal = (props:Props) => {
       { ...reactModalProps }
     >
       <h2 className='modal-title'>Not Unique</h2>
-      <p>This puzzle has multiple unique solutions.  Try adding some more values to further constrain it.</p>
+      <p>This puzzle has multiple different solutions.  Try adding some more values to further constrain it.</p>
       <div>
         <Button
           compact
