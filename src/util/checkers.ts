@@ -43,49 +43,14 @@ const sudokuClauses = (board: Array<[number, number]>): Array<Array<number>> => 
       Math.floor(c1/27) === Math.floor(c2/27) &&
       Math.floor((c1%9)/3) === Math.floor((c2%9)/3)
 
-    // Row check
     for (const c2 of cells.slice(c+1)) {
-      // Are they in the same row?
-      // If not, let's move to the next cell
-      if (!sameRow(c, c2))
-        continue;
-
-      // If so, make sure they aren't the same digit values
-      for (const d of range) {
-        clauses.push([-inCell(d, c), -inCell(d, c2)]);
-      }
-    }
-
-    // Column check
-    for (const c2 of cells.slice(c+1)) {
-      // Are they in the same column?
-      // If not, let's move to the next cell
-      if (!sameCol(c, c2))
-        continue;
-
-      // If so, make sure they aren't the same digit values
-      for (const d of range) {
-        clauses.push([-inCell(d, c), -inCell(d, c2)]);
-      }
-    }
-
-    // Box check
-    for (const c2 of cells.slice(c+1)) {
-      if (
-        // Are they in the same row or the same column?
-        // If so, we've already handled them
-        // Adding them here would just duplicate existing clauses
-        sameRow(c, c2) ||
-        sameCol(c, c2) ||
-        // Are they in the same box?
-        // If not, let's move to the next cell
-        !sameBox(c, c2)
-      )
-        continue;
-
-      // If so, make sure they aren't the same digit values
-      for (const d of range) {
-        clauses.push([-inCell(d, c), -inCell(d, c2)]);
+      // If they're current cell and the next are in the same row, column, or box
+      // Make sure they don't contain the same value
+      if (sameRow(c, c2) || sameCol(c, c2) || sameBox(c, c2)) {
+        // If so, make sure they aren't the same digit values
+        for (const d of range) {
+          clauses.push([-inCell(d, c), -inCell(d, c2)]);
+        }
       }
     }
   }
