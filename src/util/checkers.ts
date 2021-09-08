@@ -4,10 +4,9 @@ import {
   Cell,
 } from '../@types/sudoku';
 
-import { uniq } from 'lodash';
 import solveSat, { SATSolution } from 'boolean-sat';
 
-import { boardValues } from './index';
+import { uniq, boardValues } from './index';
 
 // This generates all of the constraints of a basic sudoku puzzle
 // Including one clause for each cell that is set

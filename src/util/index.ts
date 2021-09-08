@@ -26,6 +26,10 @@ export const boardValues = (board: Array<Cell>): Array<[number, number]> => {
 export const relativeToAbsolute = (url: string): string =>
   new URL(url, document.baseURI).href;
 
+export function uniq<T>(xs: Array<T>) {
+  return xs.filter((x, i) => !xs.slice(0, i).includes(x));
+}
+
 // Ideally these awkward functions would just be constructor methods
 // However, redux complains about serializability when I make the cells class objects
 export const newGivenCell = (value: number): GivenCell =>

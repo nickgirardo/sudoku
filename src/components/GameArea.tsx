@@ -8,7 +8,6 @@ import {
 import { useSelector } from 'react-redux';
 
 import classnames from 'classnames';
-import { uniq } from 'lodash';
 
 import { RootState, useAppDispatch } from '../store';
 import { selectCell, deselectAll } from '../store/selectedSlice';

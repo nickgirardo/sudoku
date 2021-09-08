@@ -3,7 +3,7 @@ import {
   PayloadAction,
 } from '@reduxjs/toolkit';
 
-import { uniq } from 'lodash';
+import { uniq } from '../util';
 
 export const selectedSlice = createSlice({
   name: 'selected',
