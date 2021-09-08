@@ -32,7 +32,7 @@ While it is difficult to make much of this, the `S!v1` at the start can be read 
 
 Why should we bother with storing puzzles in the query string?  To answer this let's compare this method to the alternative.  The common way you might build a web app like this is to have an id per puzzle and use that id in an API request to return the puzzle. For instance, you might navigate to <https://example.com/sudoku/654321>, and the page would make an API request to <https://example.com/api/sudoku?id=654321>.  This can return arbitrary JSON to describe the Sudoku puzzle.
 
-This approach has some downsides.  For one, it requires an extra request.  This can be mitigated by rendering the page statically before sending it down the wire.  However, even without the extra request more work is required for by the server.  If the puzzle is described as a query string the client can parse any puzzle from the same document.  This means only a static server with a single bundle is required instead of a server with some API path or a server to statically render the document.
+This approach has some downsides.  For one, it requires an extra request.  This can be mitigated by rendering the page statically before sending it down the wire.  However, even without the extra request more work is required by the server.  If the puzzle is described as a query string the client can parse any puzzle from the same document.  This means only a static server with a single bundle is required instead of a server with some API path or a server to statically render the document.
 
 Furthermore, if puzzles are described by an id, there must be some sort of database where the puzzles are stored.  If the puzzle is decoded from the query string, the link takes the role of the database.
 
