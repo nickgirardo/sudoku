@@ -28,9 +28,11 @@ module.exports = {
       },
     ],
   },
+	/*
   devServer: {
     contentBase: path.resolve(__dirname, './build'),
   },
+  */
   watchOptions: {
     ignored: /node_modules/,
   },
