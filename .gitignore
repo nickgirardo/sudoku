@@ -5,9 +5,14 @@
 # mac os bs
 *.DS_Store
 
-#
+# Npm dependencies
 node_modules
-build
+
+# Build artifacts
+dist
+
+# Nix output
+result
 
 # output from publishing
 bundle.*
