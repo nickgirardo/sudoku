@@ -11,6 +11,14 @@ body {
   touch-action: none;
 }
 
+h2 {
+  font-size: var(--header-font-size);
+}
+
+p {
+  font-size: var(--std-font-size);
+}
+
 @import 'variables.scss';
 
 @import 'links.scss';

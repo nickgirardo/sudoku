@@ -14,8 +14,10 @@ $color-mid-blue: hsla(195, 93%, 32%, 1);
   --cell-mark-size: 9px;
   --cell-corner-mark-center-offset: 9px;
   --cell-center-mark-word-spacing: -1px;
+  --std-font-size: 16px;
+  --header-font-size: 24px;
 
-  // Tablets and larger
+  // Tablets
   @media (orientation: portrait) and (min-width: 560px),
   (orientation:landscape) and (min-height: 560px) {
     --cell-size: 56px;
@@ -23,6 +25,19 @@ $color-mid-blue: hsla(195, 93%, 32%, 1);
     --cell-mark-size: 11px;
     --cell-corner-mark-center-offset: 20px;
     --cell-center-mark-word-spacing: normal;
+    --std-font-size: 18px;
+    --header-font-size: 26px;
+  }
+
+  // Larger desktops
+  @media (min-width: 1200px) {
+    --cell-size: 80px;
+    --cell-value-size: 60px;
+    --cell-mark-size: 18px;
+    --cell-corner-mark-center-offset: 28px;
+    --cell-center-mark-word-spacing: normal;
+    --std-font-size: 20px;
+    --header-font-size: 28px;
   }
 }
 

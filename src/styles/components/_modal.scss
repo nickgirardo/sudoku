@@ -2,8 +2,7 @@
   position: absolute;
   // Not super happy with these
   top: 30%;
-  left: 40px;
-  right: 40px;
+  inset-inline: 40px;
 
   border: $border-med;
   border-radius: $border-radius;
@@ -15,5 +14,11 @@
 
   .modal-title {
     margin-top: 0;
+  }
+
+  @media (min-width: 1200px) {
+    inset-inline: 0;
+    margin-inline: auto;
+    max-width: 800px;
   }
 }
