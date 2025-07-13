@@ -12,6 +12,7 @@ import { checkSolution } from '../util/checkers';
 import { UnimplementedModal } from './modals/UnimplementedModal';
 import { ValidModal } from './modals/ValidModal';
 import { InvalidModal } from './modals/InvalidModal';
+import { InProgressModal } from './modals/InProgressModal';
 import { Button } from './Button';
 
 enum UnimplFeature {
@@ -30,6 +31,7 @@ export const Controls = () => {
   const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
   const [showValidModal, setShowValidModal] = useState(false);
   const [showInvalidModal, setShowInvalidModal] = useState(false);
+  const [showInProgressModal, setShowInProgressModal] = useState(false);
 
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
@@ -50,12 +52,22 @@ export const Controls = () => {
   };
 
   const showBoardCheckModal = () => {
-    const correct = checkSolution(board);
+    const result = checkSolution(board);
 
-    if (correct)
-      setShowValidModal(true);
-    else
-      setShowInvalidModal(true);
+    switch (result) {
+      case 'complete':
+        setShowValidModal(true);
+        break;
+      case 'in-progress':
+        // todo
+        setShowInProgressModal(true);
+        break;
+      case 'error':
+        setShowInvalidModal(true);
+        break;
+      default:
+        assertNever(result);
+    }
   };
 
   return (
@@ -72,6 +84,10 @@ export const Controls = () => {
       <InvalidModal
         isOpen={ showInvalidModal }
         closeHandler={ () => setShowInvalidModal(false) }
+      />
+      <InProgressModal
+        isOpen={ showInProgressModal }
+        closeHandler={ () => setShowInProgressModal(false) }
       />
       <Button
         label='Value'

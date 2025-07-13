@@ -97,9 +97,16 @@ export const checkUniqelySolvable = (board: Array<Cell>): UniquenessCheckResult 
   return UniquenessCheckResult.NOT_UNIQUE;
 };
 
-// TODO maybe return a type with the kind of check result
+const solveSudoku = (board: Array<Cell>): boolean => {
+  // 81 cells, 9 bools per cell
+  const size = 81*9;
+
+  const clauses = sudokuClauses(boardValues(board));
+  return Boolean(solveSat(size, clauses));
+};
+
 // TODO this should be better tested
-export const checkSolution = (board: Array<Cell>): boolean => {
+export const checkSolution = (board: Array<Cell>): 'complete' | 'in-progress' | 'error' => {
   const inRow = (row: number, ix: number): boolean =>
     Math.floor(ix / 9) === row;
 
@@ -142,7 +149,7 @@ export const checkSolution = (board: Array<Cell>): boolean => {
   // If any cell is Mark that means it isn't a Value or Given
   // A board cannot be solved if its cells are not all entered
   if (board.some(c => c.kind === CellType.Mark))
-    return false;
+    return solveSudoku(board) ? 'in-progress' : 'error';
 
   return (
     // Check that the columns are unique
@@ -151,7 +158,7 @@ export const checkSolution = (board: Array<Cell>): boolean => {
     range.every(r => cellsUnique(board.filter((c, ix) => inRow(r, ix)))) &&
     // Check that the boxes are unique
     range.every(r => cellsUnique(board.filter((c, ix) => inBox(r, ix))))
-  );
+  ) ? 'complete' : 'error';
 };
 
 // Exporting these for testing purposes
