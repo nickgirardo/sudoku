@@ -27,7 +27,7 @@
         sudoku = pkgs.buildNpmPackage {
           name = "sudoku";
           src = gitignore.lib.gitignoreSource ./.;
-          npmDepsHash = "sha256-IOQ2rz/XYwXlN9E8zhUb7lTcGKRGisZch+5IHjCHc0Y=";
+          npmDepsHash = "sha256-17xuxwwEHEjOb3VAQHbCO8NkVeowv9CkyTmsRyq7Mgs=";
           installPhase = ''
             mkdir -p $out/dist
             cp -r dist/ $out/
