@@ -10,9 +10,15 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 
 import { RootState, useAppDispatch } from '../store';
-import { selectCell, deselectAll } from '../store/selectedSlice';
 import { clearCells, setCells } from '../store/boardSlice';
 import { nextMode, prevMode } from '../store/modeSlice';
+import {
+  selectCell,
+  deselectAll,
+  moveSelection,
+  moveAddToSelection,
+  MoveDir,
+} from '../store/selectedSlice';
 
 import { Controls } from './PlayerControls';
 import { Board } from './Board';
@@ -108,9 +114,31 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
     if (ev.key === 'Backspace' || ev.key === 'Delete')
       dispatch(clearCells(selectedCells));
 
-    // Advance the entry mode
+    // Switch to the next or previous entry mode
     if (ev.key === ' ')
       dispatch(ev.shiftKey ? prevMode() : nextMode());
+
+    if (ev.key.startsWith('Arrow')) {
+      const action = ev.shiftKey ? moveAddToSelection : moveSelection;
+
+      const key = ev.key.slice(5);
+      switch (key) {
+        case 'Up':
+          dispatch(action(MoveDir.Up));
+          break;
+        case 'Down':
+          dispatch(action(MoveDir.Down));
+          break;
+        case 'Left':
+          dispatch(action(MoveDir.Left));
+          break;
+        case 'Right':
+          dispatch(action(MoveDir.Right));
+          break;
+        default:
+          break;
+      }
+    }
 
     // Undo
     if (ev.key === 'u') {

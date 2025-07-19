@@ -142,3 +142,9 @@ const setCellCenter = (cell: Cell, mark: number): Cell => {
       return assertNever(cell);
   }
 };
+
+export const fromRowCol = (row: number, col: number): number =>
+  (col * 9) + row;
+
+export const toRowCol = (cell: number): [number, number] =>
+  [cell % 9, Math.floor(cell / 9)];
