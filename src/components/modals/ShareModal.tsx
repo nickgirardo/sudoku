@@ -20,7 +20,7 @@ export const ShareModal = (props:Props) => {
     ...reactModalProps
   } = props;
 
-  const board = useSelector((state: RootState) => state.board);
+  const board = useSelector((state: RootState) => state.board.board);
   const values = boardValues(board);
   const encoded = encodeBoard(values);
 

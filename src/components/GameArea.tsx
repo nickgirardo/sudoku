@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 import classnames from 'classnames';
 
 import { RootState, useAppDispatch } from '../store';
-import { clearCells, setCells } from '../store/boardSlice';
+import { clearCells, setCells, undo, redo } from '../store/boardSlice';
 import { nextMode, prevMode } from '../store/modeSlice';
 import {
   selectCell,
@@ -33,7 +33,7 @@ interface Props {
 
 export const GameArea = ({ children, className }: Props): ReactElement => {
   const dispatch = useAppDispatch();
-  const board = useSelector((state: RootState) => state.board);
+  const board = useSelector((state: RootState) => state.board.board);
   const entryMode = useSelector((state: RootState) => state.mode.current);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
@@ -141,14 +141,12 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
     }
 
     // Undo
-    if (ev.key === 'u') {
-      // TODO undo behavior
-    }
+    if (ev.key === 'z')
+      dispatch(undo());
 
     // Redo
-    if (ev.key === 'r') {
-      // TODO redo behavior
-    }
+    if (ev.key === 'r')
+      dispatch(redo());
   };
 
   // Check if a digit `n` at a given cell `ix` is trivially valid

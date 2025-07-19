@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch } from '../store';
 
 import { setMode } from '../store/modeSlice';
-import { setCells, clearCells } from '../store/boardSlice';
+import { setCells, clearCells, undo, redo } from '../store/boardSlice';
 import { EntryMode, UniquenessCheckResult } from '../@types/sudoku';
 
 import { assertNever } from '../util';
@@ -18,8 +18,6 @@ import { Button } from './Button';
 
 enum UnimplFeature {
   None,
-  UndoUnimplemented,
-  RedoUnimplemented,
 }
 
 export const Controls = () => {
@@ -27,7 +25,7 @@ export const Controls = () => {
 
   const entryMode = useSelector((state: RootState) => state.mode.current);
   const selectedCells = useSelector((state: RootState) => state.selected);
-  const board = useSelector((state: RootState) => state.board);
+  const board = useSelector((state: RootState) => state.board.board);
 
   const [showShareModal, setShowShareModal] = useState(false);
   const [showCheckModal, setShowCheckModal] = useState<UniquenessCheckResult | false>(false);
@@ -39,10 +37,6 @@ export const Controls = () => {
         // This shouldn't occur
         // The modal will not be shown if None is set
         return '';
-      case UnimplFeature.UndoUnimplemented:
-        return 'undo';
-      case UnimplFeature.RedoUnimplemented:
-        return 'redo';
       default:
         return assertNever(modal);
     }
@@ -118,11 +112,11 @@ export const Controls = () => {
       </div>
       <Button
         label='Undo'
-        onClick={ () => setShowUnimplModal(UnimplFeature.UndoUnimplemented) }
+        onClick={ () => dispatch(undo()) }
       />
       <Button
         label='Redo'
-        onClick={ () => setShowUnimplModal(UnimplFeature.RedoUnimplemented) }
+        onClick={ () => dispatch(redo()) }
       />
       <Button
         label='Check'
