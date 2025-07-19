@@ -13,12 +13,7 @@ import { ShareModal } from './modals/ShareModal';
 import { NotUniqModal } from './modals/NotUniqModal';
 import { NoSolnModal } from './modals/NoSolnModal';
 import { UniqSolnModal } from './modals/UniqSolnModal';
-import { UnimplementedModal } from './modals/UnimplementedModal';
 import { Button } from './Button';
-
-enum UnimplFeature {
-  None,
-}
 
 export const Controls = () => {
   const dispatch = useAppDispatch();
@@ -29,18 +24,6 @@ export const Controls = () => {
 
   const [showShareModal, setShowShareModal] = useState(false);
   const [showCheckModal, setShowCheckModal] = useState<UniquenessCheckResult | false>(false);
-  const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
-
-  const getFeatureName = (modal: UnimplFeature): string => {
-    switch (modal) {
-      case UnimplFeature.None:
-        // This shouldn't occur
-        // The modal will not be shown if None is set
-        return '';
-      default:
-        return assertNever(modal);
-    }
-  };
 
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
@@ -62,11 +45,6 @@ export const Controls = () => {
       <UniqSolnModal
         isOpen={ showCheckModal === UniquenessCheckResult.UNIQUE_SOLUTION }
         closeHandler={ () => setShowCheckModal(false) }
-      />
-      <UnimplementedModal
-        isOpen={ showUnimplModal !== UnimplFeature.None }
-        closeHandler={ () => setShowUnimplModal(UnimplFeature.None) }
-        featureName={ getFeatureName(showUnimplModal) }
       />
       <div className='keypad'>
         <Button

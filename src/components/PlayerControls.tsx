@@ -9,15 +9,10 @@ import { EntryMode } from '../@types/sudoku';
 import { assertNever } from '../util';
 import { checkSolution } from '../util/checkers';
 
-import { UnimplementedModal } from './modals/UnimplementedModal';
 import { ValidModal } from './modals/ValidModal';
 import { InvalidModal } from './modals/InvalidModal';
 import { InProgressModal } from './modals/InProgressModal';
 import { Button } from './Button';
-
-enum UnimplFeature {
-  None,
-}
 
 export const Controls = () => {
   const dispatch = useAppDispatch();
@@ -26,24 +21,12 @@ export const Controls = () => {
   const board = useSelector((state: RootState) => state.board.board);
   const selectedCells = useSelector((state: RootState) => state.selected);
 
-  const [showUnimplModal, setShowUnimplModal] = useState(UnimplFeature.None);
   const [showValidModal, setShowValidModal] = useState(false);
   const [showInvalidModal, setShowInvalidModal] = useState(false);
   const [showInProgressModal, setShowInProgressModal] = useState(false);
 
   const numberEntry = (value: number) =>
     dispatch(setCells({ ixs: selectedCells, value, mode: entryMode }));
-
-  const getFeatureName = (modal: UnimplFeature): string => {
-    switch (modal) {
-      case UnimplFeature.None:
-        // This shouldn't occur
-        // The modal will not be shown if None is set
-        return '';
-      default:
-        return assertNever(modal);
-    }
-  };
 
   const showBoardCheckModal = () => {
     const result = checkSolution(board);
@@ -66,11 +49,6 @@ export const Controls = () => {
 
   return (
     <div className='controls player-controls'>
-      <UnimplementedModal
-        isOpen={ showUnimplModal !== UnimplFeature.None }
-        closeHandler={ () => setShowUnimplModal(UnimplFeature.None) }
-        featureName={ getFeatureName(showUnimplModal) }
-      />
       <ValidModal
         isOpen={ showValidModal }
         closeHandler={ () => setShowValidModal(false) }
