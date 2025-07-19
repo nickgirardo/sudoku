@@ -25,9 +25,8 @@ export const modeSlice = createSlice({
       state.valid = payload;
     },
     nextMode: (state) => {
-      // If we don't have any valid modes, return early here
-      // Knowing there are valid modes lets us make helpful assumptions later
-      if (state.valid.length === 0)
+      // With at most one valid mode, there is nothing to be changed
+      if (state.valid.length <= 1)
         return;
 
       const getNext = (mode: EntryMode): EntryMode => {
@@ -44,12 +43,38 @@ export const modeSlice = createSlice({
       };
 
       // If the very next mode isn't valid, recurse until we find one which is
-      const getNextValid = (mode: EntryMode): EntryMode =>
-        state.valid.includes(getNext(mode)) ?
-          getNext(mode) :
-          getNextValid(getNext(mode));
+      const getNextValid = (mode: EntryMode): EntryMode => {
+        const m = getNext(mode);
+        return state.valid.includes(m) ? m : getNextValid(m);
+      }
 
       return { ...state, current: getNextValid(state.current) }
+    },
+    prevMode: (state) => {
+      // With at most one valid mode, there is nothing to be changed
+      if (state.valid.length <= 1)
+        return;
+
+      const getPrev = (mode: EntryMode): EntryMode => {
+        switch (mode) {
+          case EntryMode.Value:
+            return EntryMode.Center;
+          case EntryMode.Corner:
+            return EntryMode.Value;
+          case EntryMode.Center:
+            return EntryMode.Corner;
+          default:
+            return assertNever(mode);
+        }
+      };
+
+      // If the very next mode isn't valid, recurse until we find one which is
+      const getPrevValid = (mode: EntryMode): EntryMode => {
+        const m = getPrev(mode);
+        return state.valid.includes(m) ? m : getPrevValid(m);
+      }
+
+      return { ...state, current: getPrevValid(state.current) }
     },
     setMode: (state, { payload }: PayloadAction<EntryMode>) => {
       if (state.valid.includes(payload))
@@ -61,6 +86,7 @@ export const modeSlice = createSlice({
 export const {
   setValidModes,
   nextMode,
+  prevMode,
   setMode,
 } = modeSlice.actions;
 

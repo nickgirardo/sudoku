@@ -102,7 +102,7 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
 
     // Advance the entry mode
     if (ev.key === ' ')
-      dispatch(nextMode());
+      dispatch(ev.shiftKey ? prevMode() : nextMode());
 
     // Undo
     if (ev.key === 'u') {
