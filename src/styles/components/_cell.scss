@@ -27,6 +27,11 @@
       color: $color-black;
     }
 
+    &.cell-inner-invalid {
+      background-color: $color-light-red;
+      color: $color-mid-red;
+    }
+
     &.cell-inner-selected {
       background-color: $color-light-blue;
     }
@@ -34,7 +39,17 @@
     .centers {
       font-size: var(--cell-mark-size);
       word-spacing: var(--cell-center-mark-word-spacing);
+      max-width: 100%;
+
+      display: flex;
+      flex-flow: wrap;
+      gap: 0.3rem;
+
+      .invalid {
+          color: $color-mid-red;
+      }
     }
+
     .corners {
       position: absolute;
       top: 0;
@@ -43,6 +58,11 @@
       right: 0;
 
       font-size: var(--cell-mark-size);
+
+      .invalid {
+          color: $color-mid-red;
+      }
+
       // TODO this is super janky lol
       :nth-child(1) {
         position: absolute;

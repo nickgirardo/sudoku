@@ -12,11 +12,13 @@ import classnames from 'classnames';
 import { RootState, useAppDispatch } from '../store';
 import { selectCell, deselectAll } from '../store/selectedSlice';
 import { clearCells, setCells } from '../store/boardSlice';
-import { nextMode } from '../store/modeSlice';
+import { nextMode, prevMode } from '../store/modeSlice';
 
 import { Controls } from './PlayerControls';
 import { Board } from './Board';
 import { Cell } from './Cell';
+
+import { CellType } from '../@types/sudoku';
 
 interface Props {
   children: ReactElement;
@@ -30,6 +32,12 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
   const selectedCells = useSelector((state: RootState) => state.selected);
 
   const [selectActive, setSelectActive] = useState(false);
+
+  // Cache of set values in the current board
+  // All given and value cells are represented by their value
+  // Mark cells (which are unset) are represented by negative one (not a valid digit of course)
+  // This is helpful for speeding up some calculations, such as checking a digits trivial validity
+  const boardValues = board.map(c => c.kind === CellType.Mark ? -1 : c.value);
 
   const cellDown = (ev: (MouseEvent | TouchEvent), ix: number) => {
     setSelectActive(true);
@@ -115,6 +123,32 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
     }
   };
 
+  // Check if a digit `n` at a given cell `ix` is trivially valid
+  // This checks that the cell's row, column, or box do not have any of the same digit
+  // This does not confirm that `n` is the correct digit for that box!
+  const isValid = (ix: number, n: number): boolean => {
+    const colRange = [0, 9, 18, 27, 36, 45, 54, 63, 72];
+    const col = ix % 9;
+    const colIndicies = colRange.map(n => col + n).filter(n => n !== ix);
+
+    if (colIndicies.map(ix => boardValues[ix]).includes(n))
+      return false;
+
+    const rowRange = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    const row = ix - col;
+    const rowIndicies = rowRange.map(n => row + n).filter(n => n !== ix);
+
+    if (rowIndicies.map(ix => boardValues[ix]).includes(n))
+      return false;
+
+    const boxRange = [0, 1, 2, 9, 10, 11, 18, 19, 20];
+    const box = (Math.floor(col / 3) * 3) + (Math.floor(row / 27) * 27);
+    const boxIndicies = boxRange.map(n => box + n).filter(n => n !== ix);
+
+
+    return !boxIndicies.map(ix => boardValues[ix]).includes(n);
+  };
+
   const cells = board.map((c, ix) =>
     <Cell
       key={ ix }
@@ -124,6 +158,7 @@ export const GameArea = ({ children, className }: Props): ReactElement => {
       handleMouseDown={ (ev: MouseEvent | TouchEvent) => cellDown(ev, ix) }
       handleMouseOver={ () => cellOver(ix) }
       handleTouchMove={ (ev: TouchEvent) => cellTouchMove(ev) }
+      isValid={ (n: number) => isValid(ix, n) }
     />
   );
 

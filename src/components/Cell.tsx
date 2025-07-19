@@ -10,23 +10,29 @@ interface Props {
   ix: number,
   cell: _Cell,
   isSelected: boolean,
-  handleMouseDown: (arg0: MouseEvent | TouchEvent) => void,
-  handleMouseOver: (arg0: MouseEvent) => void,
-  handleTouchMove: (arg0: TouchEvent) => void,
+  handleMouseDown: (ev: MouseEvent | TouchEvent) => void,
+  handleMouseOver: (ev: MouseEvent) => void,
+  handleTouchMove: (ev: TouchEvent) => void,
+  isValid: (n: number) => boolean,
 }
 
 interface InnerProps {
   cell: _Cell,
+  isValid: (n: number) => boolean,
 }
 
-export const Inner = ({ cell }: InnerProps) => {
+export const Inner = ({ cell, isValid }: InnerProps) => {
   switch (cell.kind) {
     case CellType.Given:
       return <>{ cell.value }</>;
     case CellType.Value:
       return <>{ cell.value }</>;
     case CellType.Mark:
-      return <Marks corners={ cell.cornerMarks } centers={ cell.centerMarks } />
+      return <Marks
+        corners={ cell.cornerMarks }
+        centers={ cell.centerMarks }
+        isValid={ isValid }
+      />
     default:
       return assertNever(cell);
   }
@@ -37,6 +43,7 @@ export const Cell = (props: Props) => {
     'cell-inner',
     props.isSelected && 'cell-inner-selected',
     props.cell.kind === CellType.Given && 'cell-inner-given',
+    props.cell.kind === CellType.Value && !props.isValid(props.cell.value) && 'cell-inner-invalid',
   );
 
   return (
@@ -51,7 +58,7 @@ export const Cell = (props: Props) => {
       <div
         className={ innerClasses }
       >
-        <Inner cell={ props.cell } />
+        <Inner cell={ props.cell } isValid={ props.isValid } />
       </div>
     </div>
   );
